@@ -91,7 +91,7 @@ public class Robot {
 	
 	//TODO pursuit
 	public void pursue() {
-		
+		moveTowards(sensor.location);
 	}
 	
 	//TODO assist

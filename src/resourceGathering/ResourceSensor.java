@@ -1,16 +1,46 @@
 package resourceGathering;
 
+import java.util.List;
+
+import repast.simphony.engine.schedule.ScheduledMethod;
+import repast.simphony.query.space.grid.GridCell;
+import repast.simphony.query.space.grid.GridCellNgh;
+import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
+import repast.simphony.space.grid.GridPoint;
+import repast.simphony.util.SimUtilities;
 
 public class ResourceSensor {
 
 	public boolean sensesFuel;
 	public int range;
-	public NdPoint location;
+	public GridPoint location;
 	
 	
 	public ResourceSensor(int maxRange)
 	{
 		this.range = maxRange;
+		this.sensesFuel = false;
+		this.location = null;
+	}
+	
+	@ScheduledMethod(start = 1, interval = 1)
+	public void detectFuel(GridPoint currentPoint, Grid<Object> grid) {
+				
+		// use the GridCellNgh class to create GridCells for
+		// the surrounding neighborhood
+		
+		GridCellNgh<Resource> nghCreator = new GridCellNgh<Resource>(grid, currentPoint, Resource.class, range, range);
+		List<GridCell<Resource>> gridCells = nghCreator.getNeighborhood(true);
+		//SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
+		
+		if(gridCells.size() > 0) {
+			location = gridCells.get(0).getPoint();
+			sensesFuel = true;
+		} else {
+			location = null;
+			sensesFuel = false;
+		}
 	}
 }
