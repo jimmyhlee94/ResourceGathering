@@ -42,12 +42,20 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		
 		//Parameters params = RunEnvironment.getInstance().getParameters();
 		//int zombieCount = (Integer)params.getValue("zombie_count");
-		int robotCount = 10;
+		int robotCount = 1;
 		int maxFuelLevel = 100;
 		int maxSensorRange = 5;
 		
+		int resourceCount = 10;
+		
+		
 		for (int i = 0; i < robotCount; i++) {
 			context.add(new Robot(space, grid, maxFuelLevel, maxSensorRange));
+		}
+		
+		for (int j = 0; j < resourceCount; j++) {
+			//Resource with random value between 1-10, inclusive and size of 1.
+			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(1,10), 1));
 		}
 		
 		for (Object obj : context) {

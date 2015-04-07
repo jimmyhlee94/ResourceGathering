@@ -25,7 +25,6 @@ public class ResourceSensor {
 		this.location = null;
 	}
 	
-	@ScheduledMethod(start = 1, interval = 1)
 	public void detectFuel(GridPoint currentPoint, Grid<Object> grid) {
 				
 		// use the GridCellNgh class to create GridCells for
@@ -35,12 +34,17 @@ public class ResourceSensor {
 		List<GridCell<Resource>> gridCells = nghCreator.getNeighborhood(true);
 		//SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 		
-		if(gridCells.size() > 0) {
-			location = gridCells.get(0).getPoint();
-			sensesFuel = true;
-		} else {
-			location = null;
-			sensesFuel = false;
+		location = null;
+		sensesFuel = false;
+		
+		for(GridCell<Resource> pt : gridCells) {
+			if(pt.size() > 0)
+			{
+				location = pt.getPoint();
+				sensesFuel = true;
+				return;
+			}
 		}
+
 	}
 }
