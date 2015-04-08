@@ -70,6 +70,26 @@ public class Robot {
 		this.sensesFuel = sensor.sensesFuel;
 
 		if(this.sensesFuel) {
+			if(sensor.isAdjacent) {
+				if(this.payload == null) {
+					for (Object obj : grid.getObjectsAt(sensor.location.getX(), sensor.location.getY())) {
+						if (obj instanceof Resource) {
+							((Resource) obj).handlers.add(this);
+							payload = (Resource)obj;
+							break;
+						}
+					}
+				}
+				if(payload.size <= payload.handlers.size()) {
+					canCarry = true;
+					System.out.println("carry");
+					return State.CARRY;
+				} else {
+					canCarry = false;
+					System.out.println("wait");
+					return State.WAIT;
+				}
+			}
 			System.out.println("pursue");
 			return State.PURSUIT;
 		}

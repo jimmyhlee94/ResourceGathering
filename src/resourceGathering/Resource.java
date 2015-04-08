@@ -21,6 +21,6 @@ public class Resource {
 		this.grid = grid;
 		this.value = value;
 		this.size = size;
-		this.handlers = null;
+		this.handlers = new ArrayList<Robot>();
 	}
 }
