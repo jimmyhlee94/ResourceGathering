@@ -1,5 +1,5 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Space Display</name>
+  <name>grid space</name>
   <type>2D</type>
   <styles>
     <entry>
@@ -14,11 +14,11 @@
   <editedStyles>
     <entry>
       <string>resourceGathering.Resource</string>
-      <string>resourceGathering.Resource.style_0.xml</string>
+      <string>resourceGathering.Resource.style_1.xml</string>
     </entry>
     <entry>
       <string>resourceGathering.Robot</string>
-      <string>resourceGathering.Robot.style_0.xml</string>
+      <string>resourceGathering.Robot.style_1.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -34,7 +34,7 @@
     <hashCode>-617448742</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>space</layoutProjection>
+  <layoutProjection>grid</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
@@ -48,9 +48,9 @@
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>space</id>
+      <id>grid</id>
       <attributes/>
-      <type>continuous space</type>
+      <type>grid</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
@@ -58,12 +58,12 @@
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>space</string>
-      <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
+      <string>grid</string>
+      <repast.simphony.visualization.grid.GridProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>
           <entry>
-            <string>repast.simphony.visualization.continuous.ContinuousDecorator</string>
+            <string>repast.simphony.visualization.grid.GridDecorator</string>
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
@@ -80,7 +80,7 @@
             </map>
           </entry>
         </props>
-      </repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
+      </repast.simphony.visualization.grid.GridProjectionDescriptor>
     </entry>
   </projectionDescriptors>
   <props/>

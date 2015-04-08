@@ -45,13 +45,14 @@ public class Robot {
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
-		this.currentState = determineState();
+		currentState = determineState();
 		
 		switch(this.currentState) {
 		case RANDOM:
 			random();
 			break;
 		case PURSUIT:
+			pursue();
 			break;
 		case ASSIST:
 			break;
@@ -65,17 +66,15 @@ public class Robot {
 	}
 	
 	public State determineState() {
-		//update booleans
+		sensor.detectFuel(grid.getLocation(this), grid);
+		this.sensesFuel = sensor.sensesFuel;
+
+		if(this.sensesFuel) {
+			System.out.println("pursue");
+			return State.PURSUIT;
+		}
 		
-		//adequateFuel - true if enough fuel to return to HQ
-		//TODO implement logic for fuel adequacy
-		
-		//TODO implement logic for resource detection
-		//sensesFuel - true if resource sensor sees resource
-		
-		//TODO implement logic for broadcast detection
-		//receivingBroadcast - true if communicator is receiving a broadcast
-		
+		System.out.println("random");
 		return State.RANDOM;
 	}
 	
