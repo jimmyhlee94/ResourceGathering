@@ -69,7 +69,6 @@ public class Robot {
 		sensor.detectFuel(grid.getLocation(this), grid);
 		this.sensesFuel = sensor.sensesFuel;
 
-		
 		if(this.sensesFuel) {
 			System.out.println("pursue");
 			return State.PURSUIT;

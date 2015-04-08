@@ -13,7 +13,7 @@ import repast.simphony.util.SimUtilities;
 
 public class ResourceSensor {
 
-	public boolean sensesFuel;
+	public boolean sensesFuel, isAdjacent;
 	public int range;
 	public GridPoint location;
 	
@@ -22,6 +22,7 @@ public class ResourceSensor {
 	{
 		this.range = maxRange;
 		this.sensesFuel = false;
+		this.isAdjacent = false;
 		this.location = null;
 	}
 	
