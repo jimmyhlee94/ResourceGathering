@@ -18,6 +18,8 @@ public class Robot {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	
+	private int id;
+	
 	private int maxFuelLevel, fuelLevel;
 	
 	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isCarrying;
@@ -29,12 +31,24 @@ public class Robot {
 	
 	private State currentState;
 	
-	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, int maxFuelLevel, int sensorMaxRange) {
+	private Headquarters HQ;
+	
+	private GridPoint hqLocation;
+	
+	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, Headquarters HQ, int maxFuelLevel, int sensorMaxRange, int id) {
 		this.space = space;
 		this.grid = grid;
+		
+		this.id = id;
+		
+		//this.hqLocation = hqLocation;
+		this.HQ = HQ;
+		
 		this.maxFuelLevel = maxFuelLevel;
 		this.fuelLevel = maxFuelLevel;
 		this.sensor = new ResourceSensor(sensorMaxRange);
+		
+		this.payload = null;
 		
 		this.adequateFuel = true;
 		this.sensesFuel = false;
@@ -45,6 +59,7 @@ public class Robot {
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
+		System.out.println(id);
 		currentState = determineState();
 		
 		switch(this.currentState) {
@@ -57,6 +72,7 @@ public class Robot {
 		case ASSIST:
 			break;
 		case CARRY:
+			carry();
 			break;
 		case WAIT:
 			break;
@@ -66,15 +82,41 @@ public class Robot {
 	}
 	
 	public State determineState() {
+		
+		if( (this.payload != null) && (payload.size <= payload.handlers.size()) ) {
+			System.out.println("Has load, can carry");
+			return State.CARRY;
+		}
+		
 		sensor.detectFuel(grid.getLocation(this), grid);
 		this.sensesFuel = sensor.sensesFuel;
 
 		if(this.sensesFuel) {
-			System.out.println("pursue");
+			if(sensor.isAdjacent) {
+				if(this.payload == null) {
+					for (Object obj : grid.getObjectsAt(sensor.location.getX(), sensor.location.getY())) {
+						if (obj instanceof Resource) {
+							((Resource) obj).handlers.add(this);
+							payload = (Resource)obj;
+							break;
+						}
+					}
+				}
+				if(payload.size <= payload.handlers.size()) {
+					canCarry = true;
+					System.out.println("carry");
+					return State.CARRY;
+				} else {
+					canCarry = false;
+					System.out.println("wait");
+					return State.WAIT;
+				}
+			}
+			//System.out.println("pursue");
 			return State.PURSUIT;
 		}
 		
-		System.out.println("random");
+		//System.out.println("random");
 		return State.RANDOM;
 	}
 	
@@ -100,6 +142,10 @@ public class Robot {
 	
 	//TODO carry
 	public void carry() {
+		moveTowards(grid.getLocation(HQ));
+		if(payload.handlers.get(0).equals(this)) {
+			moveObjectTowards(grid.getLocation(HQ), payload);
+		}
 		
 	}
 	
@@ -122,6 +168,18 @@ public class Robot {
 			space.moveByVector(this,  1,  angle, 0);
 			myPoint = space.getLocation(this);
 			grid.moveTo(this, (int)myPoint.getX(), (int)myPoint.getY());
+		}
+	}
+	
+	public void moveObjectTowards(GridPoint pt, Object obj) {
+		// only move if we are not already in this grid location
+		if (!pt.equals(grid.getLocation(obj))) {
+			NdPoint myPoint = space.getLocation(obj);
+			NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
+			double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
+			space.moveByVector(obj,  1,  angle, 0);
+			myPoint = space.getLocation(obj);
+			grid.moveTo(obj, (int)myPoint.getX(), (int)myPoint.getY());
 		}
 	}
 	

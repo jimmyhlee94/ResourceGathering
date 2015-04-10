@@ -20,6 +20,8 @@ import repast.simphony.space.grid.WrapAroundBorders;
 
 public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 
+	public Headquarters HQ;
+	
 	@Override
 	public Context build(Context<Object> context) {
 		
@@ -37,31 +39,36 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		Grid<Object> grid = gridFactory.createGrid("grid", context,
 				new GridBuilderParameters<Object>(new WrapAroundBorders(),
 						new SimpleGridAdder<Object>(),
-						true, 50, 50));
+						true, 50, 50));	
 		
-		
-		//Parameters params = RunEnvironment.getInstance().getParameters();
+		Parameters params = RunEnvironment.getInstance().getParameters();
 		//int zombieCount = (Integer)params.getValue("zombie_count");
-		int robotCount = 1;
-		int maxFuelLevel = 100;
-		int maxSensorRange = 5;
+		int robotCount = (Integer)params.getValue("robot_count");
+		int maxFuelLevel = (Integer)params.getValue("max_fuel_capacity");
+		int maxSensorRange = (Integer)params.getValue("max_sensor_range");
 		
-		int resourceCount = 10;
+		int resourceCount = (Integer)params.getValue("resource_count");
 		
+		HQ = new Headquarters(space, grid);
+		context.add(HQ);
 		
 		for (int i = 0; i < robotCount; i++) {
-			context.add(new Robot(space, grid, maxFuelLevel, maxSensorRange));
+			context.add(new Robot(space, grid, HQ, maxFuelLevel, maxSensorRange, i));
 		}
 		
 		for (int j = 0; j < resourceCount; j++) {
 			//Resource with random value between 1-10, inclusive and size of 1.
-			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(1,10), 1));
+			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(1,10), 2));
 		}
+		
+
 		
 		for (Object obj : context) {
 			NdPoint pt = space.getLocation(obj);
 			grid.moveTo(obj, (int)pt.getX(), (int)pt.getY());
 		}
+		
+		HQ.initializeHQ();
 		
 		return context;
 	}
