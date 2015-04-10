@@ -2,13 +2,12 @@ package resourceGathering;
 
 import java.util.ArrayList;
 
-import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 
-public class Resource {
+public class CarriedResource {
 
-
+	
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	
@@ -16,22 +15,11 @@ public class Resource {
 	public int size;
 	public ArrayList<Robot> handlers;
 	
-	public boolean isBeingCarried;
-	
-	public Resource(ContinuousSpace<Object> space, Grid<Object> grid, int value, int size) {
+	public CarriedResource(ContinuousSpace<Object> space, Grid<Object> grid, int value, int size) {
 		this.space = space;
 		this.grid = grid;
 		this.value = value;
 		this.size = size;
 		this.handlers = new ArrayList<Robot>();
-	}
-	
-	@ScheduledMethod(start = 1, interval = 1)
-	public void updateState() {
-		if (handlers.size() >= size) {
-			this.isBeingCarried = true;
-		} else {
-			this.isBeingCarried = false;
-		}
 	}
 }
