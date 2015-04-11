@@ -36,13 +36,21 @@ public class ResourceSensor {
 		List<GridCell<Resource>> gridCells = nghCreator.getNeighborhood(true);
 		//SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 		
+		//reset all values
 		location = null;
 		sensesFuel = false;
+		isAdjacent = false;
+		this.distance = -1;
 		
+		// for each point in the range
 		for(GridCell<Resource> pt : gridCells) {
+			// if there is at least one resource in the point
 			if(pt.size() > 0)
 			{
+				// and the resource isn't being carried
 				if(!pt.items().iterator().next().isBeingCarried) {
+					
+					//get the location of the point and let the robot know that it senses fuel
 					location = pt.getPoint();
 					sensesFuel = true;
 					

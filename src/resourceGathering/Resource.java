@@ -34,4 +34,12 @@ public class Resource {
 			this.isBeingCarried = false;
 		}
 	}
+	
+	//sets all handling robots' payloads to null then clears the handlers list
+	public void destroy() {
+		for(Robot robot : handlers) {
+			robot.setPayload(null);
+		}
+		handlers.clear();
+	}
 }

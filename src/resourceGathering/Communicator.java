@@ -14,4 +14,8 @@ public class Communicator {
 	public boolean isReceiving;
 	
 	private Message message;
+	
+	public Communicator() {
+		
+	}
 }
