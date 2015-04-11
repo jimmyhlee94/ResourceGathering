@@ -33,13 +33,13 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 				spaceFactory.createContinuousSpace("space", context,
 						new RandomCartesianAdder<Object>(),
 						new repast.simphony.space.continuous.WrapAroundBorders(),
-						50,50);
+						20,20);
 		
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		Grid<Object> grid = gridFactory.createGrid("grid", context,
 				new GridBuilderParameters<Object>(new WrapAroundBorders(),
 						new SimpleGridAdder<Object>(),
-						true, 50, 50));	
+						true, 20, 20));	
 		
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		//int zombieCount = (Integer)params.getValue("zombie_count");

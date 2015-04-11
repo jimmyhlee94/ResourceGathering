@@ -83,9 +83,11 @@ public class Robot {
 	
 	public State determineState() {
 		
-		if( (this.payload != null) && (payload.size <= payload.handlers.size()) ) {
-			System.out.println("Has load, can carry");
-			return State.CARRY;
+		if(this.payload != null) {
+			if(payload.size <= payload.handlers.size()) {
+				System.out.println("Has load, can carry");
+				return State.CARRY;
+			}
 		}
 		
 		sensor.detectFuel(grid.getLocation(this), grid);
@@ -108,7 +110,7 @@ public class Robot {
 					return State.CARRY;
 				} else {
 					canCarry = false;
-					System.out.println("wait");
+					System.out.println("wait: " + payload.handlers.size() + "/" + payload.size);
 					return State.WAIT;
 				}
 			}
@@ -181,6 +183,10 @@ public class Robot {
 			myPoint = space.getLocation(obj);
 			grid.moveTo(obj, (int)myPoint.getX(), (int)myPoint.getY());
 		}
+	}
+	
+	public void setPayload(Resource resource) {
+		this.payload = resource;
 	}
 	
 	public enum State {
