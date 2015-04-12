@@ -18,7 +18,6 @@ public class ResourceSensor {
 	public GridPoint location;
 	public float distance;
 	
-	
 	public ResourceSensor(int maxRange) {
 		this.range = maxRange;
 		this.sensesFuel = false;

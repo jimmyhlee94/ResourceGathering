@@ -42,10 +42,10 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 						true, 20, 20));	
 		
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		//int zombieCount = (Integer)params.getValue("zombie_count");
 		int robotCount = (Integer)params.getValue("robot_count");
 		int maxFuelLevel = (Integer)params.getValue("max_fuel_capacity");
 		int maxSensorRange = (Integer)params.getValue("max_sensor_range");
+		int maxCommunicationRange = (Integer)params.getValue("max_communication_range");
 		
 		int resourceCount = (Integer)params.getValue("resource_count");
 		
@@ -53,7 +53,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		context.add(HQ);
 		
 		for (int i = 0; i < robotCount; i++) {
-			context.add(new Robot(space, grid, HQ, maxFuelLevel, maxSensorRange, i));
+			context.add(new Robot(space, grid, HQ, maxFuelLevel, maxSensorRange, maxCommunicationRange, i));
 		}
 		
 		for (int j = 0; j < resourceCount; j++) {
