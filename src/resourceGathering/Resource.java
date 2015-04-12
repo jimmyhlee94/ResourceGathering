@@ -14,16 +14,19 @@ public class Resource {
 	
 	public int value;
 	public int size;
+	public int id;
+	
 	public ArrayList<Robot> handlers;
 	
 	public boolean isBeingCarried;
 	
-	public Resource(ContinuousSpace<Object> space, Grid<Object> grid, int value, int size) {
+	public Resource(ContinuousSpace<Object> space, Grid<Object> grid, int value, int size, int id) {
 		this.space = space;
 		this.grid = grid;
 		this.value = value;
 		this.size = size;
 		this.handlers = new ArrayList<Robot>();
+		this.id = id;
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1)

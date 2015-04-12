@@ -127,11 +127,12 @@ public class Robot {
 					return State.WAIT;
 				}
 			}
-			//System.out.println("pursue");
+			//at this point, the sensor senses something, but the robot is not adjacent to the resource
+			System.out.println("pursue");
 			return State.PURSUIT;
 		}
 		
-		//System.out.println("random");
+		System.out.println("random");
 		return State.RANDOM;
 	}
 	
@@ -147,6 +148,7 @@ public class Robot {
 	
 	//TODO pursuit
 	public void pursue() {
+		System.out.println("Location: " + sensor.location.getX() + " , " + sensor.location.getY());
 		moveTowards(sensor.location);
 	}
 	

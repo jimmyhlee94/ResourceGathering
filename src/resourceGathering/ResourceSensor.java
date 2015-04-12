@@ -41,6 +41,9 @@ public class ResourceSensor {
 		isAdjacent = false;
 		this.distance = -1;
 		
+		GridPoint closestPoint = null;
+		float smallestDistance = Float.MAX_VALUE;
+		
 		// for each point in the range
 		for(GridCell<Resource> pt : gridCells) {
 			// if there is at least one resource in the point
@@ -49,26 +52,34 @@ public class ResourceSensor {
 				// and the resource isn't being carried
 				if(!pt.items().iterator().next().isBeingCarried) {
 					
-					//get the location of the point and let the robot know that it senses fuel
-					location = pt.getPoint();
+					//let the robot know that it senses fuel
 					sensesFuel = true;
 					
-					this.distance = (float) Math.sqrt(
-				            Math.pow(currentPoint.getX() - location.getX(), 2) +
-				            Math.pow(currentPoint.getY() - location.getY(), 2) );
+					float currentDistance = (float) Math.sqrt(
+				            Math.pow(currentPoint.getX() - pt.getPoint().getX(), 2) +
+				            Math.pow(currentPoint.getY() - pt.getPoint().getY(), 2) );
 					
-					//check if the robot is right next to the fuel
-					int xDiff = Math.abs(currentPoint.getX() - location.getX());
-					int yDiff = Math.abs(currentPoint.getY() - location.getY());
+					//check distance to fuel
+					int xDiff = Math.abs(currentPoint.getX() - pt.getPoint().getX());
+					int yDiff = Math.abs(currentPoint.getY() - pt.getPoint().getY());
 					
+					if(currentDistance < smallestDistance) {
+						smallestDistance = currentDistance;
+						closestPoint = pt.getPoint();
+					}
+						
+					location = closestPoint;
+					distance = smallestDistance;
+					
+					//check if the robot is right next to fuel
 					if(distance <= Math.sqrt(2)) {
 						isAdjacent = true;
 					}
 					
-					//there is an idle resource.
-					return;
 				}
 			}
 		}
+		//there is an idle resource.
+		return;
 	}
 }
