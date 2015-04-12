@@ -12,6 +12,7 @@ import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.SimUtilities;
+import resourceGathering.Communicator.Message;
 
 public class Robot {
 
@@ -25,7 +26,7 @@ public class Robot {
 	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isCarrying;
 	
 	private ResourceSensor sensor;
-	private Communicator communicator;
+	public Communicator communicator;
 	
 	private Resource payload;
 	
@@ -35,7 +36,7 @@ public class Robot {
 	
 	private GridPoint hqLocation;
 	
-	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, Headquarters HQ, int maxFuelLevel, int sensorMaxRange, int id) {
+	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, Headquarters HQ, int maxFuelLevel, int sensorMaxRange, int maxCommunicationRange, int id) {
 		this.space = space;
 		this.grid = grid;
 		
@@ -47,6 +48,8 @@ public class Robot {
 		this.maxFuelLevel = maxFuelLevel;
 		this.fuelLevel = maxFuelLevel;
 		this.sensor = new ResourceSensor(sensorMaxRange);
+		
+		this.communicator = new Communicator(maxCommunicationRange);
 		
 		this.payload = null;
 		
@@ -70,11 +73,13 @@ public class Robot {
 			pursue();
 			break;
 		case ASSIST:
+			assist();
 			break;
 		case CARRY:
 			carry();
 			break;
 		case WAIT:
+			waitForAssistance();
 			break;
 		case REFUEL:
 			break;
@@ -87,6 +92,14 @@ public class Robot {
 			if(payload.size <= payload.handlers.size()) {
 				System.out.println("Has load, can carry");
 				return State.CARRY;
+			}
+		}
+		
+		if(communicator.isReceiving) {
+			sensor.detectFuel(grid.getLocation(this), grid);
+			if(!sensor.isAdjacent) {
+				System.out.println("Assist");
+				return State.ASSIST;
 			}
 		}
 		
@@ -139,7 +152,26 @@ public class Robot {
 	
 	//TODO assist
 	public void assist() {
+		//some logic for determining which robot to assist.
+		//going with closest robot for now
+		GridPoint closestLocation = grid.getLocation(this);
+		float smallestDistance = Float.MAX_VALUE;
 		
+		for(Message m : communicator.receivedMessages) {
+			float distance = (float) Math.sqrt(
+		            Math.pow(m.location.getX() - grid.getLocation(this).getX(), 2) +
+		            Math.pow(m.location.getY() - grid.getLocation(this).getY(), 2) );
+			
+			if(distance < smallestDistance) {
+				smallestDistance = distance;
+				closestLocation = m.location;
+			}
+			
+		}
+		
+		moveTowards(closestLocation);
+		communicator.isReceiving = false;
+		communicator.receivedMessages.clear();
 	}
 	
 	//TODO carry
@@ -153,7 +185,7 @@ public class Robot {
 	
 	//TODO assist
 	public void waitForAssistance() {
-		
+		this.communicator.emit(grid.getLocation(this), grid, payload.value, payload.size);
 	}
 	
 	//TODO refuel
