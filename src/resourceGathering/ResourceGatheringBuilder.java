@@ -44,8 +44,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		int robotCount = (Integer)params.getValue("robot_count");
 		int maxFuelLevel = (Integer)params.getValue("max_fuel_capacity");
-		int fuelRate = 1;
-		
+		int fuelRate = (Integer)params.getValue("fuelRate");		
 		int maxSensorRange = (Integer)params.getValue("max_sensor_range");
 		int maxCommunicationRange = (Integer)params.getValue("max_communication_range");
 		
