@@ -22,7 +22,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 
 	public Headquarters HQ;
 	
-	@Override
+	//@Override
 	public Context build(Context<Object> context) {
 		
 		context.setId("ResourceGathering");
@@ -39,11 +39,13 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		Grid<Object> grid = gridFactory.createGrid("grid", context,
 				new GridBuilderParameters<Object>(new WrapAroundBorders(),
 						new SimpleGridAdder<Object>(),
-						true, 20, 20));
+						true, 20, 20));	
 		
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		int robotCount = (Integer)params.getValue("robot_count");
 		int maxFuelLevel = (Integer)params.getValue("max_fuel_capacity");
+		int fuelRate = 1;
+		
 		int maxSensorRange = (Integer)params.getValue("max_sensor_range");
 		int maxCommunicationRange = (Integer)params.getValue("max_communication_range");
 		
@@ -53,7 +55,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		context.add(HQ);
 		
 		for (int i = 0; i < robotCount; i++) {
-			context.add(new Robot(space, grid, HQ, maxFuelLevel, maxSensorRange, maxCommunicationRange, i));
+			context.add(new Robot(space, grid, HQ, maxFuelLevel, fuelRate, maxSensorRange, maxCommunicationRange, i));
 		}
 		
 		for (int j = 0; j < resourceCount; j++) {
