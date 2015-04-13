@@ -77,11 +77,11 @@ public class Headquarters {
 		// use the GridCellNgh class to create GridCells for
 		// the surrounding neighborhood
 		
-		GridCellNgh<Resource> nghCreator = new GridCellNgh<Resource>(grid, grid.getLocation(this), Resource.class, 1, 1);
-		List<GridCell<Resource>> gridCells = nghCreator.getNeighborhood(true);
+		GridCellNgh<Robot> nghCreator = new GridCellNgh<Robot>(grid, grid.getLocation(this), Robot.class, 1, 1);
+		List<GridCell<Robot>> gridCells = nghCreator.getNeighborhood(true);
 		//SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 		
-		for(GridCell<Resource> pt : gridCells) {
+		for(GridCell<Robot> pt : gridCells) {
 			if(pt.size() > 0)
 			{
 				GridPoint gpt = pt.getPoint();

@@ -102,6 +102,7 @@ public class Robot {
 		int fuelToHQ = (int)(oppositeLength+ adjacentLength)*fuelRate*2;
 		
 		if(fuelToHQ > (fuelLevel - fuelRate*4)){
+			System.out.println("Refuel - " + fuelLevel);
 			return State.REFUEL;
 		}
 			
