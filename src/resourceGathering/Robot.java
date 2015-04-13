@@ -24,7 +24,7 @@ public class Robot {
 	private int maxFuelLevel, fuelLevel;
 	private int fuelRate;
 	
-	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isCarrying;
+	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isCarrying, isAdjacent;
 	
 	private ResourceSensor sensor;
 	public Communicator communicator;
@@ -60,6 +60,7 @@ public class Robot {
 		this.receivingBroadcast = false;
 		this.canCarry = true;
 		this.isCarrying = false;
+		this.isAdjacent = false;
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1)
@@ -90,6 +91,23 @@ public class Robot {
 	}
 	
 	public State determineState() {
+		
+		//set all booleans
+		//fuel level
+		if(sensor.sensesFuel) {
+			this.sensesFuel = true;
+		}
+		if(communicator.isReceiving) {
+			this.receivingBroadcast = true;
+		}
+		if(payload != null) {
+			if(payload.handlers.size() >= payload.size) {
+				this.canCarry = true;
+			}
+		}
+		if(sensor.isAdjacent){
+			this.isAdjacent = false;
+		}
 		
 		if(fuelLevel <= 0){
 			return State.REFUEL;
