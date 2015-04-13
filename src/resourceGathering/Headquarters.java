@@ -71,4 +71,29 @@ public class Headquarters {
 		}
 	}
 	
+	@ScheduledMethod(start = 1, interval = 1)
+	public void refuel() {
+		
+		// use the GridCellNgh class to create GridCells for
+		// the surrounding neighborhood
+		
+		GridCellNgh<Resource> nghCreator = new GridCellNgh<Resource>(grid, grid.getLocation(this), Resource.class, 1, 1);
+		List<GridCell<Resource>> gridCells = nghCreator.getNeighborhood(true);
+		//SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
+		
+		for(GridCell<Resource> pt : gridCells) {
+			if(pt.size() > 0)
+			{
+				GridPoint gpt = pt.getPoint();
+				
+				for(Object obj : grid.getObjectsAt(gpt.getX(), gpt.getY())) {
+					if(obj instanceof Robot){
+						((Robot) obj).setFuelLevel(  ((Robot) obj).getMaxFuelLevel()   );
+					}
+				}
+			}
+		}
+		
+	}
+	
 }

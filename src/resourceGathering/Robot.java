@@ -244,6 +244,16 @@ public class Robot {
 		this.payload = resource;
 	}
 	
+	public int getMaxFuelLevel(){
+		return maxFuelLevel;
+	}
+	
+	public void setFuelLevel(int fl){
+		fuelLevel = fl;
+		return;
+	}
+	
+	
 	public enum State {
 		RANDOM, PURSUIT, ASSIST, CARRY, WAIT, REFUEL
 	}
