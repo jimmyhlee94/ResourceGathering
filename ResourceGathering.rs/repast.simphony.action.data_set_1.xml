@@ -16,11 +16,20 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Fuel Store</string>
+      <string>stored</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Fuel Store</id>
+        <id>stored</id>
         <className>resourceGathering.Headquarters</className>
         <methodName>getFuelStore</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>remaining</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>remaining</id>
+        <className>resourceGathering.Resource</className>
+        <methodName>getValue</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
