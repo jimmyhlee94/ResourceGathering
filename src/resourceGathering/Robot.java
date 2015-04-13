@@ -22,6 +22,7 @@ public class Robot {
 	private int id;
 	
 	private int maxFuelLevel, fuelLevel;
+	private int fuelRate;
 	
 	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isCarrying;
 	
@@ -36,7 +37,7 @@ public class Robot {
 	
 	private GridPoint hqLocation;
 	
-	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, Headquarters HQ, int maxFuelLevel, int sensorMaxRange, int maxCommunicationRange, int id) {
+	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, Headquarters HQ, int maxFuelLevel, int fuelRate, int sensorMaxRange, int maxCommunicationRange, int id) {
 		this.space = space;
 		this.grid = grid;
 		
@@ -47,6 +48,7 @@ public class Robot {
 		
 		this.maxFuelLevel = maxFuelLevel;
 		this.fuelLevel = maxFuelLevel;
+		this.fuelRate = fuelRate;
 		this.sensor = new ResourceSensor(sensorMaxRange);
 		
 		this.communicator = new Communicator(maxCommunicationRange);
@@ -82,11 +84,17 @@ public class Robot {
 			waitForAssistance();
 			break;
 		case REFUEL:
+			refuel();
 			break;
 		}
 	}
 	
 	public State determineState() {
+		
+		if(fuelLevel <= 0){
+			return State.REFUEL;
+			
+		}
 		
 		if(this.payload != null) {
 			if(payload.size <= payload.handlers.size()) {
@@ -188,10 +196,12 @@ public class Robot {
 	//TODO assist
 	public void waitForAssistance() {
 		this.communicator.emit(grid.getLocation(this), grid, payload.value, payload.size);
+		fuelLevel = fuelLevel - fuelRate;
 	}
 	
 	//TODO refuel
 	public void refuel() {
+		//just sit for now
 		
 	}
 	
@@ -204,6 +214,7 @@ public class Robot {
 			space.moveByVector(this,  1,  angle, 0);
 			myPoint = space.getLocation(this);
 			grid.moveTo(this, (int)myPoint.getX(), (int)myPoint.getY());
+			fuelLevel = fuelLevel - fuelRate*2;
 		}
 	}
 	
@@ -216,6 +227,7 @@ public class Robot {
 			space.moveByVector(obj,  1,  angle, 0);
 			myPoint = space.getLocation(obj);
 			grid.moveTo(obj, (int)myPoint.getX(), (int)myPoint.getY());
+			fuelLevel = fuelLevel - fuelRate*4;
 		}
 	}
 	
