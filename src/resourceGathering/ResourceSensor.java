@@ -2,14 +2,10 @@ package resourceGathering;
 
 import java.util.List;
 
-import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
-import repast.simphony.random.RandomHelper;
-import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
-import repast.simphony.util.SimUtilities;
 
 public class ResourceSensor {
 
@@ -59,10 +55,6 @@ public class ResourceSensor {
 				            Math.pow(currentPoint.getX() - pt.getPoint().getX(), 2) +
 				            Math.pow(currentPoint.getY() - pt.getPoint().getY(), 2) );
 					
-					//check distance to fuel
-					int xDiff = Math.abs(currentPoint.getX() - pt.getPoint().getX());
-					int yDiff = Math.abs(currentPoint.getY() - pt.getPoint().getY());
-					
 					if(currentDistance < smallestDistance) {
 						smallestDistance = currentDistance;
 						closestPoint = pt.getPoint();
@@ -75,7 +67,6 @@ public class ResourceSensor {
 					if(distance <= Math.sqrt(2)) {
 						isAdjacent = true;
 					}
-					
 				}
 			}
 		}
