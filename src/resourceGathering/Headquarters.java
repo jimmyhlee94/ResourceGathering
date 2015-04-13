@@ -32,6 +32,10 @@ public class Headquarters {
 		return this.location;
 	}
 	
+	public int getFuelStore() {
+		return this.fuelStore;
+	}
+	
 	public void initializeHQ() {
 		this.location = grid.getLocation(this);
 	}
