@@ -39,7 +39,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		Grid<Object> grid = gridFactory.createGrid("grid", context,
 				new GridBuilderParameters<Object>(new WrapAroundBorders(),
 						new SimpleGridAdder<Object>(),
-						true, 20, 20));	
+						true, 20, 20));
 		
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		int robotCount = (Integer)params.getValue("robot_count");
