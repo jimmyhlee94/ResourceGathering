@@ -89,13 +89,22 @@ public class Robot {
 		}
 	}
 	
-	public State determineState() {
+	public State determineState() {				
+		//calculate if more fuel is needed
+		NdPoint hq = space.getLocation(HQ);
+		NdPoint current = space.getLocation(this);		
+		double currentDistance = (double) Math.sqrt(
+		            Math.pow(current.getX() - hq.getX(), 2) +
+		            Math.pow(current.getY() - hq.getY(), 2) );
+		double angle = SpatialMath.calcAngleFor2DMovement(space, current, hq);	
+		double oppositeLength = currentDistance * Math.sin(angle);
+		double adjacentLength = currentDistance * Math.cos(angle);	
+		int fuelToHQ = (int)(oppositeLength+ adjacentLength)*fuelRate*2;
 		
-		if(fuelLevel <= 0){
+		if(fuelToHQ > (fuelLevel - fuelRate*4)){
 			return State.REFUEL;
-			
 		}
-		
+			
 		if(this.payload != null) {
 			if(payload.size <= payload.handlers.size()) {
 				System.out.println("Has load, can carry");
@@ -202,7 +211,7 @@ public class Robot {
 	//TODO refuel
 	public void refuel() {
 		//just sit for now
-		
+		moveTowards(grid.getLocation(HQ));		
 	}
 	
 	public void moveTowards(GridPoint pt) {
