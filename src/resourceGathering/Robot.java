@@ -21,8 +21,8 @@ public class Robot {
 	
 	private int id;
 	
-	private int maxFuelLevel, fuelLevel;
-	private int fuelRate;
+	private int maxFuelLevel, fuelLevel, fuelRate;
+	private int fuelConsumed =0;
 	
 	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isCarrying;
 	
@@ -207,6 +207,7 @@ public class Robot {
 	public void waitForAssistance() {
 		this.communicator.emit(grid.getLocation(this), grid, payload.value, payload.size);
 		fuelLevel = fuelLevel - fuelRate;
+		fuelConsumed += fuelRate;
 	}
 	
 	//TODO refuel
@@ -225,6 +226,7 @@ public class Robot {
 			myPoint = space.getLocation(this);
 			grid.moveTo(this, (int)myPoint.getX(), (int)myPoint.getY());
 			fuelLevel = fuelLevel - fuelRate*2;
+			fuelConsumed += fuelRate*2;
 		}
 	}
 	
@@ -238,15 +240,22 @@ public class Robot {
 			myPoint = space.getLocation(obj);
 			grid.moveTo(obj, (int)myPoint.getX(), (int)myPoint.getY());
 			fuelLevel = fuelLevel - fuelRate*4;
+			fuelConsumed += fuelRate*4;
 		}
+	}
+	
+	
+	public int getMaxFuelLevel(){
+		return maxFuelLevel;
+	}
+	
+	
+	public int getFuelConsumed(){
+		return fuelConsumed;
 	}
 	
 	public void setPayload(Resource resource) {
 		this.payload = resource;
-	}
-	
-	public int getMaxFuelLevel(){
-		return maxFuelLevel;
 	}
 	
 	public void setFuelLevel(int fl){
