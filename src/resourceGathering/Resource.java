@@ -29,6 +29,10 @@ public class Resource {
 		this.id = id;
 	}
 	
+	public int getValue() {
+		return this.value;
+	}
+	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void updateState() {
 		if (handlers.size() >= size) {
