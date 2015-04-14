@@ -99,9 +99,8 @@ public class Robot {
 		System.out.println("");
 	}
 	
-	public State determineState() {
-		
-		
+	public State determineState() {				
+
 		this.adequateFuel = false;
 		this.sensesFuel = false;
 		this.canCarry = false;
@@ -121,9 +120,24 @@ public class Robot {
 		sensor.detectFuel(grid.getLocation(this), grid);
 		communicator.receive(grid.getLocation(this), grid);
 		
+		//calculate if more fuel is needed
+		NdPoint hq = space.getLocation(HQ);
+		NdPoint current = space.getLocation(this);		
+		double currentDistance = (double) Math.sqrt(
+		            Math.pow(current.getX() - hq.getX(), 2) +
+		            Math.pow(current.getY() - hq.getY(), 2) );
+		double angle = SpatialMath.calcAngleFor2DMovement(space, current, hq);	
+		double oppositeLength = currentDistance * Math.sin(angle);
+		double adjacentLength = currentDistance * Math.cos(angle);	
+		int fuelToHQ = (int)(oppositeLength+ adjacentLength)*fuelRate*2;
+		
+		
 		//set all booleans
-		//fuel level?
-		this.adequateFuel = true;
+		if(fuelToHQ < fuelLevel){
+			System.out.println("Refuel - " + fuelLevel);
+			this.adequateFuel = true;
+		}
+		
 		
 		if(payload != null) {
 			System.out.println("Has payload");
@@ -299,7 +313,7 @@ public class Robot {
 		releasePayload();
 		System.out.println("Refuel");
 		//just sit for now
-		
+		moveTowards(grid.getLocation(HQ));		
 	}
 	
 	public void moveTowards(GridPoint pt) {
@@ -349,9 +363,40 @@ public class Robot {
 	            Math.pow(grid.getLocation(a).getY() - grid.getLocation(b).getY(), 2) );
 	}
 	
+	public int getMaxFuelLevel(){
+		return maxFuelLevel;
+	}
+	
+	public void setFuelLevel(int fl){
+		fuelLevel = fl;
+		return;
+	}
+	
 	public enum State {
 		RANDOM, PURSUIT, ASSIST, CARRY, WAIT, REFUEL
 	}
 	
+	public int IsRandom() {
+		return this.currentState == State.RANDOM ? 1 : 0;
+	}
 	
+	public int IsPursuit() {
+		return this.currentState == State.PURSUIT ? 1 : 0;
+	}
+	
+	public int IsAssist() {
+		return this.currentState == State.ASSIST ? 1 : 0;
+	}
+	
+	public int IsCarry() {
+		return this.currentState == State.CARRY ? 1 : 0;
+	}
+	
+	public int IsWait() {
+		return this.currentState == State.WAIT ? 1 : 0;
+	}
+	
+	public int IsRefuel() {
+		return this.currentState == State.REFUEL ? 1 : 0;
+	}
 }
