@@ -239,5 +239,27 @@ public class Robot {
 		RANDOM, PURSUIT, ASSIST, CARRY, WAIT, REFUEL
 	}
 	
+	public int IsRandom() {
+		return this.currentState == State.RANDOM ? 1 : 0;
+	}
 	
+	public int IsPursuit() {
+		return this.currentState == State.PURSUIT ? 1 : 0;
+	}
+	
+	public int IsAssist() {
+		return this.currentState == State.ASSIST ? 1 : 0;
+	}
+	
+	public int IsCarry() {
+		return this.currentState == State.CARRY ? 1 : 0;
+	}
+	
+	public int IsWait() {
+		return this.currentState == State.WAIT ? 1 : 0;
+	}
+	
+	public int IsRefuel() {
+		return this.currentState == State.REFUEL ? 1 : 0;
+	}
 }
