@@ -16,7 +16,7 @@ public class Robot {
 	public ContinuousSpace<Object> space;
 	public Grid<Object> grid;
 	
-	private int id;
+	public int id;
 	
 	public int maxFuelLevel, fuelLevel;
 	public int fuelRate;
@@ -101,39 +101,86 @@ public class Robot {
 	
 	public State determineState() {
 		
+		
 		this.adequateFuel = false;
 		this.sensesFuel = false;
 		this.canCarry = false;
 		this.isAdjacentToSensorTarget = false;
 		this.isAdjacentToMessageTarget = false;
+		this.receivingBroadcast = false;
+		
+		if(communicator.isEmitting) {
+			communicator.stopEmitting();
+		}
+		
+		communicator.isReceiving = false;
+		communicator.receivedMessages.clear();
+		System.out.println("	-Cleared Messages.");
 		
 		//preliminary actions
 		sensor.detectFuel(grid.getLocation(this), grid);
-	
+		communicator.receive(grid.getLocation(this), grid);
+		
 		//set all booleans
 		//fuel level?
 		this.adequateFuel = true;
 		
-		if(sensor.sensesFuel) {
+		if(payload != null) {
+			System.out.println("Has payload");
+			sensesFuel = true;
+			sensor.location = grid.getLocation(payload);
+			isAdjacentToSensorTarget = true;
+			isAdjacentToMessageTarget = true;
+		}
+		
+		if((sensor.sensesFuel) && (payload == null)) {
+			System.out.println("-Senses fuel.");
 			this.sensesFuel = true;
 		}
-		if(communicator.isReceiving) {
+		
+		if((communicator.isReceiving) && (payload == null)) {
+			System.out.println("-Receiving broadcast: " + communicator.receivedMessages.size());
 			this.receivingBroadcast = true;
-			if(calculateDistance(grid.getLocation(this), communicator.findBestLocation(grid, grid.getLocation(this), utility)) <= Math.sqrt(2)) {
+			GridPoint bestMessageLocation = communicator.findBestLocation(grid, grid.getLocation(this), utility);
+			if(calculateDistance(grid.getLocation(this), bestMessageLocation) <= Math.sqrt(2)) {
+				System.out.println("-Next to broadcast target.");
 				this.isAdjacentToMessageTarget = true;
+				
+				//attach to adjacent object
+				if(this.payload == null) {
+					for (Object obj : grid.getObjectsAt(bestMessageLocation.getX(), bestMessageLocation.getY())) {
+						if (obj instanceof Resource) {
+							((Resource) obj).handlers.add(this);
+							payload = (Resource)obj;
+							break;
+						}
+					}
+					System.out.println("attached to object");
+				}
 			}
-			
-			//figure out how to implement message target adjacency. 
-			//should the assist function just set the flag to true if the distance is <= 1?
 			
 		}
 		if(payload != null) {
 			if(payload.handlers.size() >= payload.size) {
+				System.out.println("-Can Carry.");
 				this.canCarry = true;
 			}
 		}
-		if(sensor.isAdjacent){
+		if((sensor.isAdjacent) && (payload == null)){
+			System.out.println("-Next to sensor target.");
 			this.isAdjacentToSensorTarget = true;
+
+			//attach to adjacent object
+			if(this.payload == null) {
+				for (Object obj : grid.getObjectsAt(sensor.location.getX(), sensor.location.getY())) {
+					if (obj instanceof Resource) {
+						((Resource) obj).handlers.add(this);
+						payload = (Resource)obj;
+						break;
+					}
+				}
+				System.out.println("attached to object");
+			}
 		}
 		
 		//output state
@@ -172,6 +219,7 @@ public class Robot {
 		State bestState = State.RANDOM;
 		
 		for(State state : possibleStates) {
+			System.out.println("Testing: " + state.toString());
 			TestRobot tRobot = new TestRobot(this, state, utility);
 			tRobot.testState();
 			float utility = tRobot.getUtility();
@@ -183,73 +231,6 @@ public class Robot {
 		}
 		
 		return bestState;
-		
-		/*
-		if(fuelLevel <= 0){
-			return State.REFUEL;
-			
-		}
-		
-		if(this.payload != null) {
-			if(payload.size <= payload.handlers.size()) {
-				System.out.println("Has load, can carry");
-				return State.CARRY;
-			}
-		}
-		
-		if(communicator.isReceiving) {
-			sensor.detectFuel(grid.getLocation(this), grid);
-			if(!sensor.isAdjacent) {
-				System.out.println("Assist");
-				return State.ASSIST;
-			}
-		}
-		
-		sensor.detectFuel(grid.getLocation(this), grid);
-		this.sensesFuel = sensor.sensesFuel;
-
-		if(this.sensesFuel) {
-			if(sensor.isAdjacent) {
-				if(this.payload == null) {
-					for (Object obj : grid.getObjectsAt(sensor.location.getX(), sensor.location.getY())) {
-						if (obj instanceof Resource) {
-							((Resource) obj).handlers.add(this);
-							payload = (Resource)obj;
-							break;
-						}
-					}
-				}
-				if(payload.size <= payload.handlers.size()) {
-					canCarry = true;
-					System.out.println("carry");
-					return State.CARRY;
-				} else {
-					canCarry = false;
-					System.out.println("wait: " + payload.handlers.size() + "/" + payload.size);
-					return State.WAIT;
-				}
-			}
-			//at this point, the sensor senses something, but the robot is not adjacent to the resource
-			System.out.println("pursue");
-			return State.PURSUIT;
-		}
-		
-		System.out.println("random");
-		return State.RANDOM;
-		
-		*/
-	}
-	
-	public int calculateUtility(State state) {
-		
-		int utility = 0;
-		
-		//utility for resource proximity
-		if(this.sensesFuel) {
-			utility = (int) (utility + 100/sensor.distance);
-		}
-		
-		return utility;
 	}
 	
 	// Move in a random direction
@@ -291,8 +272,6 @@ public class Robot {
 			
 		}
 		moveTowards(bestLocation);
-		communicator.isReceiving = false;
-		communicator.receivedMessages.clear();
 	}
 	
 	//TODO carry
@@ -311,17 +290,7 @@ public class Robot {
 		
 		System.out.println("Wait");
 		
-		if(this.payload == null) {
-			for (Object obj : grid.getObjectsAt(sensor.location.getX(), sensor.location.getY())) {
-				if (obj instanceof Resource) {
-					((Resource) obj).handlers.add(this);
-					payload = (Resource)obj;
-					break;
-				}
-			}
-		}
-		
-		this.communicator.emit(grid.getLocation(this), grid, payload.value, payload.size, payload.size - payload.handlers.size());
+		this.communicator.emit(grid.getLocation(this),grid.getLocation(payload), grid, payload.value, payload.size, payload.size - payload.handlers.size());
 		fuelLevel = fuelLevel - fuelRate;
 	}
 	

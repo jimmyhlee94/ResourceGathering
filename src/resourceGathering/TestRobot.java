@@ -91,7 +91,7 @@ public class TestRobot {
 			GridPoint bestLocation = grid.getLocation(this);
 			float highestUtility = -1;
 			
-			for(Message m : communicator.receivedMessages) {
+			for(Message m : messages) {
 				float utility = this.utilityCalculator.UtilityOfProximityToOthers(m.resourceValue, m.resourceSize, m.handlersNeeded, calculateDistance(grid.getLocation(this),m.location), grid.getDimensions().getHeight());
 				
 				if(utility > highestUtility) {

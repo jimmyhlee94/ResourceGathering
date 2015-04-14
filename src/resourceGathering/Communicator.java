@@ -12,7 +12,7 @@ import repast.simphony.space.grid.GridPoint;
 public class Communicator {
 	
 	private int range;
-	//public boolean isEmitting;
+	public boolean isEmitting;
 	public boolean isReceiving;
 	
 	public ArrayList<Message> receivedMessages;
@@ -20,11 +20,25 @@ public class Communicator {
 	
 	public Communicator(int range) {
 		this.range = range;
+		this.isEmitting = false;
 		this.isReceiving = false;
 		this.receivedMessages = new ArrayList<Message>();
 	}
 	
-	public void emit(GridPoint currentLocation, Grid<Object> grid, int resourceValue, int resourceSize, int handlersNeeded) {
+	public void emit(GridPoint currentLocation, GridPoint resourceLocation, Grid<Object> grid, int resourceValue, int resourceSize, int handlersNeeded) {
+		isEmitting = true;
+		broadcastingMessage = new Message(resourceLocation, resourceValue, resourceSize, handlersNeeded);
+	}
+	
+	public void stopEmitting() {
+		this.isEmitting = false;
+		this.broadcastingMessage = null;
+	}
+	
+	
+	public void receive(GridPoint currentLocation, Grid<Object> grid) {
+		
+		this.isReceiving = false;
 		
 		GridCellNgh<Robot> nghCreator = new GridCellNgh<Robot>(grid, currentLocation, Robot.class, range, range);
 		List<GridCell<Robot>> gridCells = nghCreator.getNeighborhood(false);
@@ -33,17 +47,18 @@ public class Communicator {
 		for(GridCell<Robot> pt : gridCells) {
 			// if there is at least one robot in the point
 			if(pt.size() > 0) {
-				//send the robot's communicator a message
-				broadcastingMessage = new Message(currentLocation, resourceValue, resourceSize, handlersNeeded);
-				pt.items().iterator().next().communicator.receive(broadcastingMessage);
+				//check if the robot is sending a message
+				for(Object obj : pt.items()) {
+					if(obj instanceof Robot) {
+						if(((Robot) obj).communicator.isEmitting) {
+							this.isReceiving = true;
+							this.receivedMessages.add(((Robot) obj).communicator.broadcastingMessage);
+						}
+					}
+				}
+				
 			}
 		}
-	}
-	
-	
-	public void receive(Message message) {
-		this.isReceiving = true;
-		this.receivedMessages.add(message);
 	}
 	
 	public GridPoint findBestLocation(Grid<Object> grid, GridPoint currentLocation, Utility utility) {
@@ -51,7 +66,7 @@ public class Communicator {
 		float highestUtility = -1;
 		
 		for(Message m : receivedMessages) {
-			float currentUtility = utility.UtilityOfProximityToOthers(m.resourceValue, m.resourceSize, m.handlersNeeded, calculateDistance(grid.getLocation(this),m.location), grid.getDimensions().getHeight());
+			float currentUtility = utility.UtilityOfProximityToOthers(m.resourceValue, m.resourceSize, m.handlersNeeded, calculateDistance(currentLocation,m.location), grid.getDimensions().getHeight());
 			
 			if(currentUtility > highestUtility) {
 				highestUtility = currentUtility;
