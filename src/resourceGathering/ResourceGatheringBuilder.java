@@ -63,8 +63,8 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		}
 				
 		for (int j = 0; j < resourceCount; j++) {
-			//Resource with random value between 1-10, inclusive and size of 1.
-			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(1,10), 2, j));
+			//Resource with random value between 10-1000, inclusive and size of 1.
+			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(10,1000), 2, j));
 		}
 				
 		for (Object obj : context) {
