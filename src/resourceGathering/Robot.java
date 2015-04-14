@@ -1,43 +1,47 @@
 package resourceGathering;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.query.space.grid.GridCell;
-import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
-import repast.simphony.util.SimUtilities;
-import resourceGathering.Communicator.Message;
+import resourceGathering.Message;
 
 public class Robot {
 
-	private ContinuousSpace<Object> space;
-	private Grid<Object> grid;
+	public ContinuousSpace<Object> space;
+	public Grid<Object> grid;
 	
 	private int id;
 	
-	private int maxFuelLevel, fuelLevel;
-	private int fuelRate;
+	public int maxFuelLevel, fuelLevel;
+	public int fuelRate;
 	
-	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isCarrying, isAdjacent;
+	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isAdjacent;
 	
-	private ResourceSensor sensor;
+	public ResourceSensor sensor;
 	public Communicator communicator;
 	
-	private Resource payload;
+	public Resource payload;
 	
 	private State currentState;
 	
-	private Headquarters HQ;
+	public Headquarters HQ;
 	
 	private GridPoint hqLocation;
 	
-	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, Headquarters HQ, int maxFuelLevel, int fuelRate, int sensorMaxRange, int maxCommunicationRange, int id) {
+	int maxSensorRange;
+	int maxCommunicationRange;
+	
+	Utility utility;
+	int numTotalRobots;
+	
+	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, Headquarters HQ, int maxFuelLevel, int fuelRate,
+			int maxSensorRange, int maxCommunicationRange, int id, Utility utility, int numTotalRobots) {
 		this.space = space;
 		this.grid = grid;
 		
@@ -49,7 +53,14 @@ public class Robot {
 		this.maxFuelLevel = maxFuelLevel;
 		this.fuelLevel = maxFuelLevel;
 		this.fuelRate = fuelRate;
-		this.sensor = new ResourceSensor(sensorMaxRange);
+		
+		this.maxSensorRange = maxSensorRange;
+		this.maxCommunicationRange = maxCommunicationRange;
+		
+		this.utility = utility;
+		this.numTotalRobots = numTotalRobots;
+		
+		this.sensor = new ResourceSensor(maxSensorRange);
 		
 		this.communicator = new Communicator(maxCommunicationRange);
 		
@@ -58,14 +69,13 @@ public class Robot {
 		this.adequateFuel = true;
 		this.sensesFuel = false;
 		this.receivingBroadcast = false;
-		this.canCarry = true;
-		this.isCarrying = false;
+		this.canCarry = false;
 		this.isAdjacent = false;
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
-		System.out.println(id);
+		System.out.println("ID: " + id);
 		currentState = determineState();
 		
 		switch(this.currentState) {
@@ -88,12 +98,24 @@ public class Robot {
 			refuel();
 			break;
 		}
+		System.out.println("");
 	}
 	
 	public State determineState() {
 		
+		this.adequateFuel = false;
+		this.sensesFuel = false;
+		this.receivingBroadcast = false;
+		this.canCarry = false;
+		this.isAdjacent = false;
+		
+		//preliminary actions
+		sensor.detectFuel(grid.getLocation(this), grid);
+	
 		//set all booleans
-		//fuel level
+		//fuel level?
+		this.adequateFuel = true;
+		
 		if(sensor.sensesFuel) {
 			this.sensesFuel = true;
 		}
@@ -106,9 +128,58 @@ public class Robot {
 			}
 		}
 		if(sensor.isAdjacent){
-			this.isAdjacent = false;
+			this.isAdjacent = true;
 		}
 		
+		//output state
+		
+		if(!adequateFuel) {
+			return State.REFUEL;
+		}
+		
+		if(adequateFuel && !sensesFuel && !receivingBroadcast && !canCarry && !isAdjacent) {
+			return State.RANDOM;
+		}
+		
+		ArrayList<State> possibleStates = new ArrayList<State>();
+		
+		if(adequateFuel && sensesFuel && canCarry && isAdjacent) {
+			possibleStates.add(State.CARRY);
+		}
+		
+		if(adequateFuel && sensesFuel && !isAdjacent) {
+			possibleStates.add(State.PURSUIT);
+		}
+		
+		if(adequateFuel && receivingBroadcast) {
+			possibleStates.add(State.ASSIST);
+		}
+		
+		if(adequateFuel && sensesFuel && !canCarry && isAdjacent) {
+			possibleStates.add(State.WAIT);
+		}
+		
+		if(possibleStates.size() == 1) {
+			return possibleStates.get(0);
+		}
+		
+		float highestUtility = -1;
+		State bestState = State.RANDOM;
+		
+		for(State state : possibleStates) {
+			TestRobot tRobot = new TestRobot(this, state, utility, numTotalRobots);
+			tRobot.testState();
+			float utility = tRobot.getUtility();
+			System.out.println("* "+state.toString() + " : " + utility);
+			if(utility > highestUtility) {
+				highestUtility = utility;
+				bestState = state;
+			}
+		}
+		
+		return bestState;
+		
+		/*
 		if(fuelLevel <= 0){
 			return State.REFUEL;
 			
@@ -160,26 +231,44 @@ public class Robot {
 		
 		System.out.println("random");
 		return State.RANDOM;
+		
+		*/
+	}
+	
+	public int calculateUtility(State state) {
+		
+		int utility = 0;
+		
+		//utility for resource proximity
+		if(this.sensesFuel) {
+			utility = (int) (utility + 100/sensor.distance);
+		}
+		
+		return utility;
 	}
 	
 	// Move in a random direction
 	public void random() {
+		System.out.println("Random");
 		GridPoint current = grid.getLocation(this);
 		int randomX = RandomHelper.nextIntFromTo(-1, 1);
 		int randomY = RandomHelper.nextIntFromTo(-1, 1);
 		int[] pointArray = { current.getX() + randomX, current.getY() + randomY };
 		GridPoint randomPoint = new GridPoint(pointArray);
 		moveTowards(randomPoint);
+		
+		fuelLevel = fuelLevel - fuelRate*2;
 	}
 	
 	//TODO pursuit
 	public void pursue() {
-		System.out.println("Location: " + sensor.location.getX() + " , " + sensor.location.getY());
+		System.out.println("Pursuing Location: " + sensor.location.getX() + " , " + sensor.location.getY());
 		moveTowards(sensor.location);
 	}
 	
 	//TODO assist
 	public void assist() {
+		System.out.println("Assist");
 		//some logic for determining which robot to assist.
 		//going with closest robot for now
 		GridPoint closestLocation = grid.getLocation(this);
@@ -204,21 +293,24 @@ public class Robot {
 	
 	//TODO carry
 	public void carry() {
+		System.out.println("Carry");
 		moveTowards(grid.getLocation(HQ));
 		if(payload.handlers.get(0).equals(this)) {
 			moveObjectTowards(grid.getLocation(HQ), payload);
 		}
-		
+		fuelLevel = fuelLevel - fuelRate*4;
 	}
 	
 	//TODO assist
 	public void waitForAssistance() {
-		this.communicator.emit(grid.getLocation(this), grid, payload.value, payload.size);
+		System.out.println("Wait");
+		this.communicator.emit(grid.getLocation(this), grid, payload.value, payload.size, payload.size - payload.handlers.size());
 		fuelLevel = fuelLevel - fuelRate;
 	}
 	
 	//TODO refuel
 	public void refuel() {
+		System.out.println("Refuel");
 		//just sit for now
 		
 	}
@@ -232,7 +324,6 @@ public class Robot {
 			space.moveByVector(this,  1,  angle, 0);
 			myPoint = space.getLocation(this);
 			grid.moveTo(this, (int)myPoint.getX(), (int)myPoint.getY());
-			fuelLevel = fuelLevel - fuelRate*2;
 		}
 	}
 	
@@ -245,7 +336,6 @@ public class Robot {
 			space.moveByVector(obj,  1,  angle, 0);
 			myPoint = space.getLocation(obj);
 			grid.moveTo(obj, (int)myPoint.getX(), (int)myPoint.getY());
-			fuelLevel = fuelLevel - fuelRate*4;
 		}
 	}
 	

@@ -10,18 +10,6 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 
 public class Communicator {
-
-	public class Message {
-		public GridPoint location;
-		public int resourceSize;
-		public int resourceValue;
-		
-		public Message(GridPoint location, int resourceValue, int resourceSize) {
-			this.location = location;
-			this.resourceValue = resourceValue;
-			this.resourceSize = resourceSize;
-		}
-	}	
 	
 	private int range;
 	//public boolean isEmitting;
@@ -36,16 +24,16 @@ public class Communicator {
 		this.receivedMessages = new ArrayList<Message>();
 	}
 	
-	public void emit(GridPoint currentLocation, Grid<Object> grid, int resourceValue, int resourceSize) {
+	public void emit(GridPoint currentLocation, Grid<Object> grid, int resourceValue, int resourceSize, int handlersNeeded) {
 		GridCellNgh<Robot> nghCreator = new GridCellNgh<Robot>(grid, currentLocation, Robot.class, range, range);
-		List<GridCell<Robot>> gridCells = nghCreator.getNeighborhood(true);
+		List<GridCell<Robot>> gridCells = nghCreator.getNeighborhood(false);
 		
 		// for all points in the range
 		for(GridCell<Robot> pt : gridCells) {
 			// if there is at least one robot in the point
 			if(pt.size() > 0) {
 				//send the robot's communicator a message
-				Message message = new Message(currentLocation, resourceValue, resourceSize);
+				Message message = new Message(currentLocation, resourceValue, resourceSize, handlersNeeded);
 				pt.items().iterator().next().communicator.receive(message);
 			}
 		}

@@ -50,19 +50,28 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		
 		int resourceCount = (Integer)params.getValue("resource_count");
 		
+		//utility params
+		float resourceWeight = (Float)params.getValue("resource_weight");
+		int resourceProximityBonus = (Integer)params.getValue("resource_proximity_bonus");
+
+		int hqProximityBonus = (Integer)params.getValue("hq_proximity_bonus");
+		int fullTankUtility = (Integer)params.getValue("full_tank_utility");
+		
 		HQ = new Headquarters(space, grid);
 		context.add(HQ);
 		
 		for (int i = 0; i < robotCount; i++) {
-			context.add(new Robot(space, grid, HQ, maxFuelLevel, fuelRate, maxSensorRange, maxCommunicationRange, i));
+			
+			Utility utility = new Utility(resourceWeight, resourceProximityBonus,
+					hqProximityBonus, fullTankUtility);
+			
+			context.add(new Robot(space, grid, HQ, maxFuelLevel, fuelRate, maxSensorRange, maxCommunicationRange, i, utility, robotCount));
 		}
 		
 		for (int j = 0; j < resourceCount; j++) {
 			//Resource with random value between 1-10, inclusive and size of 1.
 			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(1,10), 2, j));
 		}
-		
-
 		
 		for (Object obj : context) {
 			NdPoint pt = space.getLocation(obj);
