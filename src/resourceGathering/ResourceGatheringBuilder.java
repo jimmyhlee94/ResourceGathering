@@ -32,7 +32,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 				ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		ContinuousSpace<Object> space =
 				spaceFactory.createContinuousSpace("space", context,
-						new SimpleCartesianAdder<Object>(),
+						new RandomCartesianAdder<Object>(),
 						new repast.simphony.space.continuous.WrapAroundBorders(),
 						20,20);
 		
@@ -61,16 +61,12 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 			context.add(robot);
 			space.moveTo(robot, space.getLocation(HQ).getX(), space.getLocation(HQ).getY());
 		}
-		
-		
-		space.setAdder(new RandomCartesianAdder<Object>());
+				
 		for (int j = 0; j < resourceCount; j++) {
 			//Resource with random value between 1-10, inclusive and size of 1.
 			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(1,10), 2, j));
 		}
-		
-
-		
+				
 		for (Object obj : context) {
 			NdPoint pt = space.getLocation(obj);
 			grid.moveTo(obj, (int)pt.getX(), (int)pt.getY());
