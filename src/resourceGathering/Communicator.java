@@ -25,6 +25,7 @@ public class Communicator {
 	}
 	
 	public void emit(GridPoint currentLocation, Grid<Object> grid, int resourceValue, int resourceSize, int handlersNeeded) {
+		
 		GridCellNgh<Robot> nghCreator = new GridCellNgh<Robot>(grid, currentLocation, Robot.class, range, range);
 		List<GridCell<Robot>> gridCells = nghCreator.getNeighborhood(false);
 		
@@ -33,8 +34,8 @@ public class Communicator {
 			// if there is at least one robot in the point
 			if(pt.size() > 0) {
 				//send the robot's communicator a message
-				Message message = new Message(currentLocation, resourceValue, resourceSize, handlersNeeded);
-				pt.items().iterator().next().communicator.receive(message);
+				broadcastingMessage = new Message(currentLocation, resourceValue, resourceSize, handlersNeeded);
+				pt.items().iterator().next().communicator.receive(broadcastingMessage);
 			}
 		}
 	}
@@ -43,5 +44,27 @@ public class Communicator {
 	public void receive(Message message) {
 		this.isReceiving = true;
 		this.receivedMessages.add(message);
+	}
+	
+	public GridPoint findBestLocation(Grid<Object> grid, GridPoint currentLocation, Utility utility) {
+		GridPoint bestLocation = grid.getLocation(this);
+		float highestUtility = -1;
+		
+		for(Message m : receivedMessages) {
+			float currentUtility = utility.UtilityOfProximityToOthers(m.resourceValue, m.resourceSize, m.handlersNeeded, calculateDistance(grid.getLocation(this),m.location), grid.getDimensions().getHeight());
+			
+			if(currentUtility > highestUtility) {
+				highestUtility = currentUtility;
+				bestLocation = m.location;
+			}
+			
+		}
+		return bestLocation;
+	}
+	
+	private float calculateDistance(GridPoint a, GridPoint b) {
+		return (float) Math.sqrt(
+	            Math.pow(a.getX() - b.getX(), 2) +
+	            Math.pow(a.getY() - b.getY(), 2) );
 	}
 }

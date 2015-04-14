@@ -38,9 +38,8 @@ public class TestRobot {
 	private GridPoint location;
 	
 	Utility utilityCalculator;
-	int numTotalRobots;
 	
-	public TestRobot(Robot original, State testState, Utility utilityCalculator, int numTotalRobots) {
+	public TestRobot(Robot original, State testState, Utility utilityCalculator) {
 		
 		this.sourceRobot = original;
 		this.testState = testState;
@@ -65,7 +64,6 @@ public class TestRobot {
 		grid.moveTo(this, grid.getLocation(sourceRobot).getX(), grid.getLocation(sourceRobot).getY());
 		
 		this.location = grid.getLocation(sourceRobot);
-		this.numTotalRobots = numTotalRobots;
 		
 	}
 	
@@ -89,22 +87,21 @@ public class TestRobot {
 		} else if (testState == State.ASSIST) {
 			
 			//some logic for determining which robot to assist.
-			//going with closest robot for now
-			GridPoint closestLocation = grid.getLocation(this);
-			float smallestDistance = Float.MAX_VALUE;
+			//use the utility function.
+			GridPoint bestLocation = grid.getLocation(this);
+			float highestUtility = -1;
 			
-			for(Message m : messages) {
-				float distance = (float) Math.sqrt(
-			            Math.pow(m.location.getX() - grid.getLocation(this).getX(), 2) +
-			            Math.pow(m.location.getY() - grid.getLocation(this).getY(), 2) );
+			for(Message m : communicator.receivedMessages) {
+				float utility = this.utilityCalculator.UtilityOfProximityToOthers(m.resourceValue, m.resourceSize, m.handlersNeeded, calculateDistance(grid.getLocation(this),m.location), grid.getDimensions().getHeight());
 				
-				if(distance < smallestDistance) {
-					smallestDistance = distance;
-					closestLocation = m.location;
+				if(utility > highestUtility) {
+					highestUtility = utility;
+					bestLocation = m.location;
 				}
+				
 			}
 			
-			moveTowards(closestLocation);
+			moveTowards(bestLocation);
 			
 		} else if (testState == State.WAIT) {
 			
@@ -179,7 +176,7 @@ public class TestRobot {
 		}
 		
 		if(this.payload != null) {
-			utility += utilityCalculator.UtilityOfResourceInPossession(payload.value, payload.size, payload.size-payload.handlers.size(), numTotalRobots);
+			utility += utilityCalculator.UtilityOfResourceInPossession(payload.value, payload.size, payload.size-payload.handlers.size());
 		}
 
 		if(this.messages.size() > 0) {
@@ -187,7 +184,7 @@ public class TestRobot {
 			for(Message m : messages) {
 				float distanceToRobot =  calculateDistance(location, m.location);
 				float currentUtility = utilityCalculator.UtilityOfProximityToOthers(m.resourceValue, m.resourceSize, m.handlersNeeded,
-						distanceToRobot, numTotalRobots, grid.getDimensions().getHeight());
+						distanceToRobot, grid.getDimensions().getHeight());
 				if(currentUtility > highestUtility) {
 					highestUtility = currentUtility;
 				}

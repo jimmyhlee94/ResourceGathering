@@ -14,15 +14,18 @@ public class Utility {
 	//Utility of having a full tank
 	public float fullTankUtility;
 	
+	public int numTotalRobots;
+	
 	public Utility(float resourceWeight, float resourceProximityBonus, 
-			 float hqProximityBonus, float fullTankUtility) {
+			 float hqProximityBonus, float fullTankUtility, int numTotalRobots) {
 		this.resourceWeight = resourceWeight;
 		this.resourceProximityBonus = resourceProximityBonus;
 		this.hqProximityBonus = hqProximityBonus;
 		this.fullTankUtility = fullTankUtility;
+		this.numTotalRobots = numTotalRobots;
 	}
 	
-	public float UtilityOfResourceInPossession(int value, int size, int handlersNeeded, int numTotalRobots) {
+	public float UtilityOfResourceInPossession(int value, int size, int handlersNeeded) {
 		float utility = resourceWeight * (1-handlersNeeded/numTotalRobots) * value/size;
 		return utility;
 	}
@@ -32,7 +35,7 @@ public class Utility {
 		return utility;
 	}
 	
-	public float UtilityOfProximityToOthers(int value, int size, int handlersNeeded, float distance, int numTotalRobots, int mapSize) {
+	public float UtilityOfProximityToOthers(int value, int size, int handlersNeeded, float distance, int mapSize) {
 		float utility = (value/size) * (1-(handlersNeeded/numTotalRobots)) * (1-(distance/mapSize));
 		return utility;
 		
