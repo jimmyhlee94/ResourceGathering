@@ -74,11 +74,15 @@ public class ResourceSensor {
 			}
 		}
 		
-		//check value of resource for graph
-		GridPoint gpt = location;		
-		for(Object obj : grid.getObjectsAt(gpt.getX(), gpt.getY())) {
-			if(obj instanceof Resource){
-				totalValueDetected += ((Resource) obj).getValue();
+		if(location != null){
+				//check value of resource for graph
+			
+			GridPoint gpt = location;		
+			for(Object obj : grid.getObjectsAt(gpt.getX(), gpt.getY())) {
+				if(obj instanceof Resource){
+					totalValueDetected += ((Resource) obj).value;
+					 System.out.println(((Resource) obj).value);
+				}
 			}
 		}
 		
