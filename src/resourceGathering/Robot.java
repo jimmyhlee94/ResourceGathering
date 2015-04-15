@@ -18,8 +18,8 @@ public class Robot {
 	
 	public int id;
 	
-	public int maxFuelLevel, fuelLevel;
-	public int fuelRate;
+	public int maxFuelLevel, fuelLevel, fuelRate;
+	public int fuelConsumed =0;
 	
 	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isAdjacentToSensorTarget, isAdjacentToMessageTarget;
 	private boolean outOfFuel;
@@ -344,6 +344,7 @@ public class Robot {
 			random();
 		}
 		fuelLevel = fuelLevel - fuelRate;
+		fuelConsumed += fuelRate;
 	}
 	
 	//TODO refuel
@@ -364,6 +365,8 @@ public class Robot {
 			space.moveByVector(this,  1,  angle, 0);
 			myPoint = space.getLocation(this);
 			grid.moveTo(this, (int)myPoint.getX(), (int)myPoint.getY());
+			fuelLevel = fuelLevel - fuelRate*2;
+			fuelConsumed += fuelRate*2;
 		}
 	}
 	
@@ -376,6 +379,9 @@ public class Robot {
 			space.moveByVector(obj,  1,  angle, 0);
 			myPoint = space.getLocation(obj);
 			grid.moveTo(obj, (int)myPoint.getX(), (int)myPoint.getY());
+			fuelLevel = fuelLevel - fuelRate*4;
+			fuelConsumed += fuelRate*4;
+
 		}
 	}
 	
@@ -386,9 +392,6 @@ public class Robot {
 		}
 	}
 	
-	public void setPayload(Resource resource) {
-		this.payload = resource;
-	}
 	
 	private float calculateDistance(GridPoint a, GridPoint b) {
 		return (float) Math.sqrt(
@@ -406,8 +409,16 @@ public class Robot {
 		return maxFuelLevel;
 	}
 	
+	public int getFuelConsumed(){
+		return fuelConsumed;
+	}
+	
 	public int getFuelLevel(){
 		return fuelLevel;
+	}
+	
+	public void setPayload(Resource resource) {
+		this.payload = resource;
 	}
 	
 	public void setFuelLevel(int fl){
