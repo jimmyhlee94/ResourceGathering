@@ -34,13 +34,13 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 				spaceFactory.createContinuousSpace("space", context,
 						new RandomCartesianAdder<Object>(),
 						new repast.simphony.space.continuous.WrapAroundBorders(),
-						20,20);
+						50,50);
 		
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		Grid<Object> grid = gridFactory.createGrid("grid", context,
 				new GridBuilderParameters<Object>(new WrapAroundBorders(),
 						new SimpleGridAdder<Object>(),
-						true, 20, 20));	
+						true, 50, 50));	
 		
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		int robotCount = (Integer)params.getValue("robot_count");
@@ -51,13 +51,24 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		
 		int resourceCount = (Integer)params.getValue("resource_count");
 		
+		//utility params
+		float resourceWeight = (Float)params.getValue("resource_weight");
+		int resourceProximityBonus = (Integer)params.getValue("resource_proximity_bonus");
+
+		int hqProximityBonus = (Integer)params.getValue("hq_proximity_bonus");
+		int fullTankUtility = (Integer)params.getValue("full_tank_utility");
+
 		
 		HQ = new Headquarters(space, grid);
 		context.add(HQ);
 		space.moveTo(HQ, space.getDimensions().getHeight()/2, space.getDimensions().getWidth()/2);
 		
 		for (int i = 0; i < robotCount; i++) {
-			final Robot robot = new Robot(space, grid, HQ, maxFuelLevel, fuelRate, maxSensorRange, maxCommunicationRange, i);
+
+			Utility utility = new Utility(resourceWeight, resourceProximityBonus,
+					hqProximityBonus, fullTankUtility, robotCount);
+
+			final Robot robot = new Robot(space, grid, HQ, maxFuelLevel, fuelRate, maxSensorRange, maxCommunicationRange, i, utility);
 			context.add(robot);
 			space.moveTo(robot, space.getLocation(HQ).getX(), space.getLocation(HQ).getY());
 		}
@@ -66,7 +77,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 			//Resource with random value between 1-10, inclusive and size of 1.
 			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(1,10), 2, j));
 		}
-				
+
 		for (Object obj : context) {
 			NdPoint pt = space.getLocation(obj);
 			grid.moveTo(obj, (int)pt.getX(), (int)pt.getY());
