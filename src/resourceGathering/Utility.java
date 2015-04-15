@@ -46,7 +46,7 @@ public class Utility {
 		return utility;
 	}
 	
-	public float UtilityOfFuelLevel(int currentFuelLevel, int maxFuelCapacity) {
+	public float UtilityOfFuelLevel(float currentFuelLevel, int maxFuelCapacity) {
 		float utility = fullTankUtility * (currentFuelLevel/maxFuelCapacity);
 		return utility;
 	}

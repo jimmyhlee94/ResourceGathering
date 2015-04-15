@@ -18,8 +18,9 @@ public class Robot {
 	
 	public int id;
 	
-	public int maxFuelLevel, fuelLevel, fuelRate;
+	public int maxFuelLevel;
 	public int fuelConsumed =0;
+	public float fuelRate, fuelLevel;
 	
 	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isAdjacentToSensorTarget, isAdjacentToMessageTarget;
 	private boolean outOfFuel;
@@ -42,7 +43,7 @@ public class Robot {
 	
 	Utility utility;
 	
-	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, Headquarters HQ, int maxFuelLevel, int fuelRate,
+	public Robot(ContinuousSpace<Object> space, Grid<Object> grid, Headquarters HQ, int maxFuelLevel, float fuelRate,
 			int maxSensorRange, int maxCommunicationRange, int id, Utility utility) {
 		this.space = space;
 		this.grid = grid;
@@ -141,7 +142,7 @@ public class Robot {
 		double angle = SpatialMath.calcAngleFor2DMovement(space, current, hq);	
 		double oppositeLength = currentDistance * Math.sin(angle);
 		double adjacentLength = currentDistance * Math.cos(angle);	
-		int fuelToHQ = Math.abs((int)(oppositeLength+ adjacentLength)*fuelRate*2);
+		float fuelToHQ = Math.abs((int)(oppositeLength+ adjacentLength)*fuelRate*2);
 		
 		
 		//set all booleans
@@ -412,7 +413,7 @@ public class Robot {
 		return fuelConsumed;
 	}
 	
-	public int getFuelLevel(){
+	public float getFuelLevel(){
 		return fuelLevel;
 	}
 	
