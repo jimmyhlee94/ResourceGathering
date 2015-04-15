@@ -91,8 +91,12 @@ public class Headquarters {
 				GridPoint gpt = pt.getPoint();
 				
 				for(Object obj : grid.getObjectsAt(gpt.getX(), gpt.getY())) {
-					if(obj instanceof Robot){
-						((Robot) obj).setFuelLevel(  ((Robot) obj).getMaxFuelLevel()   );
+					if(obj instanceof Robot){	
+						int maxFuelLevel = ((Robot) obj).getMaxFuelLevel();
+						if(this.fuelStore > maxFuelLevel){
+							this.fuelStore -=  maxFuelLevel - ((Robot) obj).getFuelLevel();
+							((Robot) obj).setFuelLevel(   maxFuelLevel  );
+						}
 					}
 				}
 			}
