@@ -36,6 +36,12 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
+				<parameter name="field_size" displayName="Field Size" type="int" 
+						defaultValue="25" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
 				<parameter name="robot_count" displayName="Robots" type="int" 
 						defaultValue="10" 
 						isReadOnly="false" 

@@ -170,6 +170,7 @@ public class Robot {
 			debugger.log("-Receiving broadcast: " + communicator.receivedMessages.size());
 			this.receivingBroadcast = true;
 			GridPoint bestMessageLocation = communicator.findBestLocation(grid, grid.getLocation(this), utility);
+			
 			if(calculateDistance(grid.getLocation(this), bestMessageLocation) <= Math.sqrt(2)) {
 				debugger.log("-Next to broadcast target.");
 				this.isAdjacentToMessageTarget = true;

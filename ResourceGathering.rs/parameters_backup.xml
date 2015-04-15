@@ -7,7 +7,7 @@
 									
 		/>
 				<parameter name="resource_count" displayName="Resources" type="int" 
-						defaultValue="1" 
+						defaultValue="10" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -20,12 +20,6 @@
 		/>
 				<parameter name="max_sensor_range" displayName="Sensor Range" type="int" 
 						defaultValue="5" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-									
-		/>
-				<parameter name="hq_distance_penalty_rate" displayName="HQ Distance Penalty Rate" type="int" 
-						defaultValue="10" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
