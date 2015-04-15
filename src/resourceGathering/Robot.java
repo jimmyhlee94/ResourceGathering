@@ -405,6 +405,10 @@ public class Robot {
 		return maxFuelLevel;
 	}
 	
+	public int getFuelLevel(){
+		return fuelLevel;
+	}
+	
 	public void setFuelLevel(int fl){
 		fuelLevel = fl;
 		return;
