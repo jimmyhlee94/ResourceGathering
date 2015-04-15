@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Fuel Discovered</name>
+  <name>Total Fuel Collected</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,16 +11,25 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-788794886</hashCode>
+    <hashCode>406361997</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Fuel Discovered</string>
+      <string>stored</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Fuel Discovered</id>
-        <className>resourceGathering.ResourceSensor</className>
-        <methodName>getTotalValueDetected</methodName>
+        <id>stored</id>
+        <className>resourceGathering.Headquarters</className>
+        <methodName>getFuelStore</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>remaining</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>remaining</id>
+        <className>resourceGathering.Resource</className>
+        <methodName>getValue</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

@@ -13,6 +13,7 @@ public class ResourceSensor {
 	public int range;
 	public GridPoint location;
 	public float distance;
+	private int totalValueDetected;
 	
 	public ResourceSensor(int maxRange) {
 		this.range = maxRange;
@@ -20,6 +21,7 @@ public class ResourceSensor {
 		this.isAdjacent = false;
 		this.location = null;
 		this.distance = -1;
+		totalValueDetected = 0;
 	}
 	
 	public void detectFuel(GridPoint currentPoint, Grid<Object> grid) {
@@ -67,10 +69,28 @@ public class ResourceSensor {
 					if(distance <= Math.sqrt(2)) {
 						isAdjacent = true;
 					}
+					
 				}
 			}
 		}
+		
+		//check value of resource for graph
+		GridPoint gpt = location;		
+		for(Object obj : grid.getObjectsAt(gpt.getX(), gpt.getY())) {
+			if(obj instanceof Resource){
+				totalValueDetected += ((Resource) obj).getValue();
+			}
+		}
+		
+		
+		
 		//there is an idle resource.
 		return;
 	}
+	
+	public int getTotalValueDetected(){
+		return totalValueDetected;
+	}
+	
+	
 }
