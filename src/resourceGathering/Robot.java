@@ -19,7 +19,7 @@ public class Robot {
 	public int id;
 	
 	public int maxFuelLevel;
-	public int fuelConsumed =0;
+	public float fuelConsumed =0;
 	public float fuelRate, fuelLevel;
 	
 	private boolean adequateFuel, sensesFuel, receivingBroadcast, canCarry, isAdjacentToSensorTarget, isAdjacentToMessageTarget;
@@ -142,7 +142,7 @@ public class Robot {
 		double angle = SpatialMath.calcAngleFor2DMovement(space, current, hq);	
 		double oppositeLength = currentDistance * Math.sin(angle);
 		double adjacentLength = currentDistance * Math.cos(angle);	
-		float fuelToHQ = Math.abs((int)(oppositeLength+ adjacentLength)*fuelRate*2);
+		float fuelToHQ = Math.abs((int)(oppositeLength+ adjacentLength)*fuelRate*2) + 4;
 		
 		
 		//set all booleans
@@ -285,7 +285,6 @@ public class Robot {
 		GridPoint randomPoint = new GridPoint(pointArray);
 		moveTowards(randomPoint);
 		
-		fuelLevel = fuelLevel - fuelRate*2;
 	}
 	
 	//TODO pursuit
@@ -295,8 +294,6 @@ public class Robot {
 		}
 		debugger.log("Pursuing Location: " + sensor.location.getX() + " , " + sensor.location.getY());
 		moveTowards(sensor.location);
-		
-		fuelLevel = fuelLevel - fuelRate*2;
 	}
 	
 	//TODO assist
@@ -319,7 +316,6 @@ public class Robot {
 			
 		}
 		moveTowards(bestLocation);
-		fuelLevel = fuelLevel - fuelRate*2;
 	}
 	
 	//TODO carry
@@ -330,7 +326,9 @@ public class Robot {
 		if(payload.handlers.get(0).equals(this)) {
 			moveObjectTowards(grid.getLocation(HQ), payload);
 		}
-		fuelLevel = fuelLevel - fuelRate*4;
+		//extra fuel for carrying
+		fuelLevel = fuelLevel - fuelRate*2;
+		fuelConsumed += fuelRate*2;
 	}
 	
 	//TODO assist
@@ -353,7 +351,6 @@ public class Robot {
 		releasePayload();
 		debugger.log("Refuel");
 		moveTowards(grid.getLocation(HQ));
-		fuelLevel = fuelLevel - fuelRate*2;
 	}
 	
 	public void moveTowards(GridPoint pt) {
@@ -409,7 +406,7 @@ public class Robot {
 		return maxFuelLevel;
 	}
 	
-	public int getFuelConsumed(){
+	public float getFuelConsumed(){
 		return fuelConsumed;
 	}
 	
