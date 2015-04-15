@@ -104,12 +104,13 @@ public class TestRobot {
 			moveTowards(bestLocation);
 			
 		} else if (testState == State.WAIT) {
-			
-			payloadResourceValue = sourceRobot.payload.value;
-			payloadResourceSize = sourceRobot.payload.size;
-			numPayloadHandlers = sourceRobot.payload.handlers.size();
-			
-			fuelLevel = fuelLevel - fuelRate;
+			if(sourceRobot.payload != null) {
+				payloadResourceValue = sourceRobot.payload.value;
+				payloadResourceSize = sourceRobot.payload.size;
+				numPayloadHandlers = sourceRobot.payload.handlers.size();
+				
+				fuelLevel = fuelLevel - fuelRate;
+			}
 		} 
 		
 		
