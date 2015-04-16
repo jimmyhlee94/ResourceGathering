@@ -5,7 +5,7 @@ public class Debugger {
 	public Robot brokenRobot;
 	
 	public Debugger(Robot brokenRobot) {
-		isDebugging = false;
+		isDebugging = true;
 		this.brokenRobot = brokenRobot;
 	}
 	

@@ -46,6 +46,13 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		int hqProximityBonus = (Integer)params.getValue("hq_proximity_bonus");
 		int fullTankUtility = (Integer)params.getValue("full_tank_utility");
 		
+		//utility direct state bias
+		int pursueBias = (Integer)params.getValue("u_pursue_bias");
+		int carryBias = (Integer)params.getValue("u_carry_bias");
+		int waitBias = (Integer)params.getValue("u_wait_bias");
+		int assistBias = (Integer)params.getValue("u_assist_bias");
+		
+		
 		int fieldSize = (Integer)params.getValue("field_size");
 		
 		ContinuousSpaceFactory spaceFactory = 
