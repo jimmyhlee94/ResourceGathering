@@ -12,8 +12,32 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="robot_count" displayName="Robots" type="int" 
+				<parameter name="full_tank_utility" displayName="Full Tank Utility" type="int" 
+						defaultValue="100" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="u_carry_bias" displayName="U: Carry Bias" type="int" 
+						defaultValue="0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="u_pursue_bias" displayName="U: Pursue Bias" type="int" 
+						defaultValue="0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="resource_count" displayName="Resources" type="int" 
 						defaultValue="10" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="penalty_for_waiting" displayName="Penalty For Waiting" type="int" 
+						defaultValue="5" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -24,21 +48,31 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-
 				<parameter name="field_size" displayName="Field Size" type="int" 
 						defaultValue="25" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-
+				<parameter name="robot_count" displayName="Robots" type="int" 
+						defaultValue="10" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="u_wait_bias" displayName="U: Wait Bias" type="int" 
+						defaultValue="0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
 				<parameter name="resource_proximity_bonus" displayName="Resource Proximity Bonus" type="int" 
 						defaultValue="100" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="full_tank_utility" displayName="Full Tank Utility" type="int" 
+				<parameter name="max_fuel_capacity" displayName="Robot Fuel Cap." type="int" 
 						defaultValue="100" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
@@ -50,28 +84,16 @@
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 									
 		/>
-				<parameter name="Fuel Depletion Rate" displayName="Fuel Depletion Rate" type="float" 
-						defaultValue="0.1" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-									
-		/>
 				<parameter name="max_communication_range" displayName="Communication Range" type="int" 
 						defaultValue="10" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="resource_count" displayName="Resources" type="int" 
-						defaultValue="10" 
+				<parameter name="Fuel Depletion Rate" displayName="Fuel Depletion Rate" type="float" 
+						defaultValue="0.1" 
 						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-									
-		/>
-				<parameter name="max_fuel_capacity" displayName="Robot Fuel Cap." type="int" 
-						defaultValue="100" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 									
 		/>
 		</parameters>

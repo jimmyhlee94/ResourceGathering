@@ -193,6 +193,8 @@ public class TestRobot {
 			utility += highestUtility;
 		}
 		
+		utility += utilityCalculator.UtilityOfState(testState);
+		
 		utility += utilityCalculator.UtilityOfProximityToHQ(distanceToHQ, grid.getDimensions().getHeight());
 
 		utility += utilityCalculator.UtilityOfFuelLevel(this.fuelLevel, sourceRobot.maxFuelLevel);

@@ -154,7 +154,6 @@ public class Robot {
 		
 		//set all booleans
 		if(fuelToHQ < fuelLevel){
-			debugger.log("-Refuel - " + fuelLevel);
 			this.adequateFuel = true;
 		} else {
 			this.adequateFuel = false;
@@ -170,12 +169,12 @@ public class Robot {
 		}
 		
 		if((sensor.sensesFuel) && (payload == null)) {
-			debugger.log("-Senses fuel.");
+			//debugger.log("-Senses fuel.");
 			this.sensesFuel = true;
 		}
 		
 		if((communicator.isReceiving) && (payload == null)) {
-			debugger.log("-Receiving broadcast: " + communicator.receivedMessages.size());
+			//debugger.log("-Receiving broadcast: " + communicator.receivedMessages.size());
 			this.receivingBroadcast = true;
 			GridPoint bestMessageLocation = communicator.findBestLocation(grid, grid.getLocation(this), utility);
 			Iterable<Object> resources = grid.getObjectsAt(bestMessageLocation.getX(), bestMessageLocation.getY());
@@ -194,7 +193,7 @@ public class Robot {
 			}
 			
 			if(calculateDistance(grid.getLocation(this), bestMessageLocation) <= Math.sqrt(2)) {
-				debugger.log("-Next to broadcast target.");
+				//debugger.log("-Next to broadcast target.");
 				this.isAdjacentToMessageTarget = true;
 				
 				//attach to adjacent object
@@ -206,14 +205,14 @@ public class Robot {
 							break;
 						}
 					}
-					debugger.log("-attached to object");
+					//debugger.log("-attached to object");
 				}
 			}
 			
 		}
 		if(payload != null) {
 			if(payload.handlers.size() >= payload.size) {
-				debugger.log("-Can Carry.");
+				//debugger.log("-Can Carry.");
 				this.canCarry = true;
 			}
 		}
@@ -230,11 +229,12 @@ public class Robot {
 						break;
 					}
 				}
-				debugger.log("-attached to object");
+				//debugger.log("-attached to object");
 			}
 		}
 		
 		//output state
+		/*
 		debugger.log("AF: " + adequateFuel);
 		debugger.log("SF: " + sensesFuel);
 		debugger.log("CC: " + canCarry);
@@ -242,7 +242,7 @@ public class Robot {
 		debugger.log("AdjM: " + isAdjacentToMessageTarget);
 		debugger.log("RB: " + receivingBroadcast);
 		debugger.log("Pay: " + (payload != null));
-		
+		*/
 		if(!adequateFuel) {
 			return State.REFUEL;
 		}
