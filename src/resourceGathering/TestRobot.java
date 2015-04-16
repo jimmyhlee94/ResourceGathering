@@ -23,8 +23,8 @@ public class TestRobot {
 	private Communicator communicator;
 	private ArrayList<Message> messages;
 	
-	private int fuelLevel = 0;
-	private int fuelRate = 0;
+	private float fuelLevel = 0;
+	private float fuelRate = 0;
 	
 	private float distanceToResource = Float.MAX_VALUE;
 	private float distanceToHQ = Float.MAX_VALUE;
