@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
-<<<<<<< HEAD
 					<parameter name="fuelRate" displayName="Fuel Depletion Rate" type="int" 
 						defaultValue="1" 
 						isReadOnly="false" 
