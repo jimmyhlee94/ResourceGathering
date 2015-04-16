@@ -337,7 +337,8 @@ public class Robot {
 
 		debugger.log("Wait");
 		
-		if(payload != null) {
+		if((payload != null) &&(grid.getLocation(payload) != null)) {
+			
 			this.communicator.emit(grid.getLocation(this),grid.getLocation(payload), grid, payload.value, payload.size, payload.size - payload.handlers.size());
 		} else {
 			random();
