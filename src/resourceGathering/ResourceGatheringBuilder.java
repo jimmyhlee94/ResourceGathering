@@ -1,5 +1,7 @@
 package resourceGathering;
 
+import java.util.Random;
+
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
@@ -66,7 +68,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		HQ = new Headquarters(space, grid);
 		context.add(HQ);
 		space.moveTo(HQ, space.getDimensions().getHeight()/2, space.getDimensions().getWidth()/2);
-		
+		Random random = new Random();
 		for (int i = 0; i < robotCount; i++) {
 
 			Utility utility = new Utility(resourceWeight, resourceProximityBonus,
@@ -74,7 +76,8 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 
 			final Robot robot = new Robot(space, grid, HQ, maxFuelLevel, fuelRate, maxSensorRange, maxCommunicationRange, i, utility);
 			context.add(robot);
-			space.moveTo(robot, space.getLocation(HQ).getX(), space.getLocation(HQ).getY());
+			//initialize robots in a circle around the HQ
+			space.moveTo(robot, space.getLocation(HQ).getX() + random.nextInt(3) - 1, space.getLocation(HQ).getY() + random.nextInt(3) - 1);
 		}
 				
 		for (int j = 0; j < resourceCount; j++) {
