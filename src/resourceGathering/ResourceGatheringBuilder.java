@@ -69,8 +69,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		Random random = new Random();
 		for (int i = 0; i < robotCount; i++) {
 
-			Utility utility = new Utility(resourceWeight, resourceProximityBonus,
-					hqProximityBonus, fullTankUtility, robotCount);
+			Utility utility = new Utility();
 
 			final Robot robot = new Robot(space, grid, HQ, maxFuelLevel, fuelRate, maxSensorRange, maxCommunicationRange, i, utility);
 			context.add(robot);

@@ -197,6 +197,10 @@ public class TestRobot {
 
 		utility += utilityCalculator.UtilityOfFuelLevel(this.fuelLevel, sourceRobot.maxFuelLevel);
 		
+		if(sourceRobot.IsWait() == 1) {
+			utility += utilityCalculator.UtilityLostFromWaiting(sourceRobot.getTicksInCurrentState());
+		}
+		
 		return utility;
 	}
 
