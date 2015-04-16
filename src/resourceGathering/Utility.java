@@ -1,5 +1,8 @@
 package resourceGathering;
 
+import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.parameter.Parameters;
+
 public class Utility {
 
 	//mutliplier for having a resource in possession
@@ -14,15 +17,21 @@ public class Utility {
 	//Utility of having a full tank
 	public float fullTankUtility;
 	
+	public float penaltyForWaiting;
+	
 	public int numTotalRobots;
 	
-	public Utility(float resourceWeight, float resourceProximityBonus, 
-			 float hqProximityBonus, float fullTankUtility, int numTotalRobots) {
-		this.resourceWeight = resourceWeight;
-		this.resourceProximityBonus = resourceProximityBonus;
-		this.hqProximityBonus = hqProximityBonus;
-		this.fullTankUtility = fullTankUtility;
-		this.numTotalRobots = numTotalRobots;
+	public Utility() {
+		
+		Parameters params = RunEnvironment.getInstance().getParameters();
+		numTotalRobots = (Integer)params.getValue("robot_count");
+
+		//utility params
+		resourceWeight = (Float)params.getValue("resource_weight");
+		resourceProximityBonus = (Integer)params.getValue("resource_proximity_bonus");
+		hqProximityBonus = (Integer)params.getValue("hq_proximity_bonus");
+		fullTankUtility = (Integer)params.getValue("full_tank_utility");
+		penaltyForWaiting = (Integer)params.getValue("penalty_for_waiting");
 	}
 	
 	public float UtilityOfResourceInPossession(int value, int size, int handlersNeeded) {
@@ -48,6 +57,11 @@ public class Utility {
 	
 	public float UtilityOfFuelLevel(float currentFuelLevel, int maxFuelCapacity) {
 		float utility = fullTankUtility * (currentFuelLevel/maxFuelCapacity);
+		return utility;
+	}
+	
+	public float UtilityLostFromWaiting(int ticksWaited) {
+		float utility = ticksWaited * penaltyForWaiting * -1;
 		return utility;
 	}
 

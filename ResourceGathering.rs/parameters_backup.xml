@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
-					<parameter name="fuelRate" displayName="Fuel Depletion Rate" type="int" 
-						defaultValue="1" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-									
-		/>
-				<parameter name="resource_count" displayName="Resources" type="int" 
-						defaultValue="10" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-									
-		/>
-				<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
-
+					<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
 						defaultValue="__NULL__"
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
@@ -25,7 +12,6 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-
 				<parameter name="robot_count" displayName="Robots" type="int" 
 						defaultValue="10" 
 						isReadOnly="false" 
@@ -38,6 +24,14 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
+
+				<parameter name="field_size" displayName="Field Size" type="int" 
+						defaultValue="25" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+
 				<parameter name="resource_proximity_bonus" displayName="Resource Proximity Bonus" type="int" 
 						defaultValue="100" 
 						isReadOnly="false" 
@@ -52,6 +46,12 @@
 		/>
 				<parameter name="resource_weight" displayName="Resource Weight" type="float" 
 						defaultValue="1.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+									
+		/>
+				<parameter name="Fuel Depletion Rate" displayName="Fuel Depletion Rate" type="float" 
+						defaultValue="0.1" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 									
