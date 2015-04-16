@@ -25,6 +25,15 @@ public class Communicator {
 		this.receivedMessages = new ArrayList<Message>();
 	}
 	
+	public boolean getIsEmmiting(){
+		return this.isEmitting;
+	}
+	
+	public boolean getIsReceiving(){
+		return this.isReceiving;
+	}
+	
+	
 	public void emit(GridPoint currentLocation, GridPoint resourceLocation, Grid<Object> grid, int resourceValue, int resourceSize, int handlersNeeded) {
 		isEmitting = true;
 		broadcastingMessage = new Message(resourceLocation, resourceValue, resourceSize, handlersNeeded);
@@ -62,7 +71,7 @@ public class Communicator {
 	}
 	
 	public GridPoint findBestLocation(Grid<Object> grid, GridPoint currentLocation, Utility utility) {
-		GridPoint bestLocation = grid.getLocation(this);
+		GridPoint bestLocation = currentLocation;
 		float highestUtility = -1;
 		
 		for(Message m : receivedMessages) {

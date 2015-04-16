@@ -28,24 +28,12 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		
 		context.setId("ResourceGathering");
 		
-		ContinuousSpaceFactory spaceFactory = 
-				ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
-		ContinuousSpace<Object> space =
-				spaceFactory.createContinuousSpace("space", context,
-						new RandomCartesianAdder<Object>(),
-						new repast.simphony.space.continuous.WrapAroundBorders(),
-						50,50);
-		
-		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
-		Grid<Object> grid = gridFactory.createGrid("grid", context,
-				new GridBuilderParameters<Object>(new WrapAroundBorders(),
-						new SimpleGridAdder<Object>(),
-						true, 50, 50));	
+
 		
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		int robotCount = (Integer)params.getValue("robot_count");
 		int maxFuelLevel = (Integer)params.getValue("max_fuel_capacity");
-		int fuelRate = (Integer)params.getValue("fuelRate");		
+		float fuelRate = (Float)params.getValue("Fuel Depletion Rate");		
 		int maxSensorRange = (Integer)params.getValue("max_sensor_range");
 		int maxCommunicationRange = (Integer)params.getValue("max_communication_range");
 		
@@ -57,6 +45,22 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 
 		int hqProximityBonus = (Integer)params.getValue("hq_proximity_bonus");
 		int fullTankUtility = (Integer)params.getValue("full_tank_utility");
+		
+		int fieldSize = (Integer)params.getValue("field_size");
+		
+		ContinuousSpaceFactory spaceFactory = 
+				ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
+		ContinuousSpace<Object> space =
+				spaceFactory.createContinuousSpace("space", context,
+						new RandomCartesianAdder<Object>(),
+						new repast.simphony.space.continuous.WrapAroundBorders(),
+						fieldSize,fieldSize);
+		
+		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
+		Grid<Object> grid = gridFactory.createGrid("grid", context,
+				new GridBuilderParameters<Object>(new WrapAroundBorders(),
+						new SimpleGridAdder<Object>(),
+						true, fieldSize, fieldSize));	
 
 		
 		HQ = new Headquarters(space, grid);
@@ -75,7 +79,8 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 				
 		for (int j = 0; j < resourceCount; j++) {
 			//Resource with random value between 10-1000, inclusive and size of 1.
-			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(10,1000), RandomHelper.nextIntFromTo(1, robotCount), j));
+			int resourceSize = RandomHelper.nextIntFromTo(1, 5);
+			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(10,1000), resourceSize, j));
 		}
 
 		for (Object obj : context) {

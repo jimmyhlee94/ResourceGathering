@@ -46,8 +46,31 @@ public class Utility {
 		return utility;
 	}
 	
-	public float UtilityOfFuelLevel(int currentFuelLevel, int maxFuelCapacity) {
+	public float UtilityOfFuelLevel(float currentFuelLevel, int maxFuelCapacity) {
 		float utility = fullTankUtility * (currentFuelLevel/maxFuelCapacity);
 		return utility;
 	}
+
+	public float getResourceWeight() {
+		return resourceWeight;
+	}
+
+	public float getResourceProximityBonus() {
+		return resourceProximityBonus;
+	}
+
+	public float getHqProximityBonus() {
+		return hqProximityBonus;
+	}
+
+	public float getFullTankUtility() {
+		return fullTankUtility;
+	}
+
+	public int getNumTotalRobots() {
+		return numTotalRobots;
+	}
+	
+	
+	
 }

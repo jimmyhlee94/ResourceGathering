@@ -22,6 +22,27 @@ public class ResourceSensor {
 		this.distance = -1;
 	}
 	
+	public boolean getSensesFuel(){
+		return this.sensesFuel;
+	}
+	
+	public boolean getIsAdjacent(){
+		return this.isAdjacent;
+	}
+	
+	public int getRange(){
+		return this.range;
+	}
+	
+	public GridPoint getLocation(){
+		return this.location;
+	}
+	
+	public float getDistance(){
+		return this.distance;
+	}
+	
+	
 	public void detectFuel(GridPoint currentPoint, Grid<Object> grid) {
 				
 		// use the GridCellNgh class to create GridCells for
