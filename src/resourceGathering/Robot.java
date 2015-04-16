@@ -31,6 +31,7 @@ public class Robot {
 	public Resource payload;
 	
 	private State currentState;
+	private int ticksInCurrentState = 0;
 	
 	public Headquarters HQ;
 	
@@ -80,7 +81,13 @@ public class Robot {
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
 		debugger.log("ID: " + id);
+		State prevState = currentState;
 		currentState = determineState();
+		if(currentState == prevState){
+			this.ticksInCurrentState++;
+		} else {
+			this.ticksInCurrentState = 0;
+		}
 		
 		switch(this.currentState) {
 		case RANDOM:
@@ -404,6 +411,9 @@ public class Robot {
 	            Math.pow(grid.getLocation(a).getY() - grid.getLocation(b).getY(), 2) );
 	}
 	
+	public int getTicksInCurrentState(){
+		return this.ticksInCurrentState;
+	}
 
 	public int getID(){
 		return id;
