@@ -199,5 +199,68 @@ public class TestRobot {
 		
 		return utility;
 	}
+
+	public Robot getSourceRobot() {
+		return sourceRobot;
+	}
+
+	public State getTestState() {
+		return testState;
+	}
+
+	public ResourceSensor getSensor() {
+		return sensor;
+	}
+
+	public Communicator getCommunicator() {
+		return communicator;
+	}
+
+	public ArrayList<Message> getMessages() {
+		return messages;
+	}
+
+	public float getFuelLevel() {
+		return fuelLevel;
+	}
+
+	public float getFuelRate() {
+		return fuelRate;
+	}
+
+	public float getDistanceToResource() {
+		return distanceToResource;
+	}
+
+	public float getDistanceToHQ() {
+		return distanceToHQ;
+	}
+
+	public Resource getPayload() {
+		return payload;
+	}
+
+	public int getPayloadResourceValue() {
+		return payloadResourceValue;
+	}
+
+	public int getPayloadResourceSize() {
+		return payloadResourceSize;
+	}
+
+	public int getNumPayloadHandlers() {
+		return numPayloadHandlers;
+	}
+
+	public GridPoint getLocation() {
+		return location;
+	}
+
+	public Utility getUtilityCalculator() {
+		return utilityCalculator;
+	}
+	
+	
+	
 	
 }

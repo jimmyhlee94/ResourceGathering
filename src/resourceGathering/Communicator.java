@@ -25,6 +25,15 @@ public class Communicator {
 		this.receivedMessages = new ArrayList<Message>();
 	}
 	
+	public boolean getIsEmmiting(){
+		return this.isEmitting;
+	}
+	
+	public boolean getIsReceiving(){
+		return this.isReceiving;
+	}
+	
+	
 	public void emit(GridPoint currentLocation, GridPoint resourceLocation, Grid<Object> grid, int resourceValue, int resourceSize, int handlersNeeded) {
 		isEmitting = true;
 		broadcastingMessage = new Message(resourceLocation, resourceValue, resourceSize, handlersNeeded);

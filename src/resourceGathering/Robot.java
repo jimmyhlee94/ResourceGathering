@@ -404,6 +404,11 @@ public class Robot {
 	            Math.pow(grid.getLocation(a).getY() - grid.getLocation(b).getY(), 2) );
 	}
 	
+
+	public int getID(){
+		return id;
+	}
+	
 	public int getMaxFuelLevel(){
 		return maxFuelLevel;
 	}
@@ -416,6 +421,57 @@ public class Robot {
 		return fuelLevel;
 	}
 	
+	public boolean isAdequateFuel() {
+		return adequateFuel;
+	}
+
+	public boolean isSensesFuel() {
+		return sensesFuel;
+	}
+
+	public boolean isReceivingBroadcast() {
+		return receivingBroadcast;
+	}
+
+	public boolean isCanCarry() {
+		return canCarry;
+	}
+
+	public boolean isAdjacentToSensorTarget() {
+		return isAdjacentToSensorTarget;
+	}
+
+	public boolean isAdjacentToMessageTarget() {
+		return isAdjacentToMessageTarget;
+	}
+
+	public boolean isOutOfFuel() {
+		return outOfFuel;
+	}
+
+	public ResourceSensor getSensor() {
+		return sensor;
+	}
+
+	public Communicator getCommunicator() {
+		return communicator;
+	}
+
+	public Resource getPayload() {
+		return payload;
+	}
+
+	public State getCurrentState() {
+		return currentState;
+	}
+
+	public Utility getUtility() {
+		return utility;
+	}
+	
+	
+	
+	
 	public void setPayload(Resource resource) {
 		this.payload = resource;
 	}
@@ -424,6 +480,8 @@ public class Robot {
 		fuelLevel = fl;
 		return;
 	}
+	
+	
 	
 	public enum State {
 		RANDOM, PURSUIT, ASSIST, CARRY, WAIT, REFUEL, OUT_OF_FUEL
