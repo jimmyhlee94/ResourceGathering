@@ -50,4 +50,27 @@ public class Utility {
 		float utility = fullTankUtility * (currentFuelLevel/maxFuelCapacity);
 		return utility;
 	}
+
+	public float getResourceWeight() {
+		return resourceWeight;
+	}
+
+	public float getResourceProximityBonus() {
+		return resourceProximityBonus;
+	}
+
+	public float getHqProximityBonus() {
+		return hqProximityBonus;
+	}
+
+	public float getFullTankUtility() {
+		return fullTankUtility;
+	}
+
+	public int getNumTotalRobots() {
+		return numTotalRobots;
+	}
+	
+	
+	
 }
