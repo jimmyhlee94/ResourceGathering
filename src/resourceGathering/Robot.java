@@ -137,8 +137,14 @@ public class Robot {
 		communicator.receivedMessages.clear();
 		
 		//preliminary actions
-		sensor.detectFuel(grid.getLocation(this), grid);
-		communicator.receive(grid.getLocation(this), grid);
+		sensor.detectClosestFuel(grid.getLocation(this), grid);
+
+		GridPoint payloadLocation = null;
+		if(payload != null) {
+			payloadLocation = grid.getLocation(payload);
+		}
+		
+		communicator.receive(grid.getLocation(this),payloadLocation, grid);
 		
 		//calculate if more fuel is needed
 		NdPoint hq = space.getLocation(HQ);
@@ -173,7 +179,7 @@ public class Robot {
 			this.sensesFuel = true;
 		}
 		
-		if((communicator.isReceiving) && (payload == null)) {
+		if((communicator.isReceiving)) {
 			//debugger.log("-Receiving broadcast: " + communicator.receivedMessages.size());
 			this.receivingBroadcast = true;
 			GridPoint bestMessageLocation = communicator.findBestLocation(grid, grid.getLocation(this), utility);

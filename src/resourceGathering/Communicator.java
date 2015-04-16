@@ -45,7 +45,7 @@ public class Communicator {
 	}
 	
 	
-	public void receive(GridPoint currentLocation, Grid<Object> grid) {
+	public void receive(GridPoint currentLocation, GridPoint currentResourceLocation ,Grid<Object> grid) {
 		
 		this.isReceiving = false;
 		
@@ -67,6 +67,16 @@ public class Communicator {
 				}
 				
 			}
+		}
+		
+		if(currentResourceLocation != null) {
+			ArrayList<Message> messagesToBeRemoved = new ArrayList<Message>();
+			for(Message m : receivedMessages) {
+				if(m.location == currentResourceLocation) {
+					messagesToBeRemoved.add(m);
+				}
+			}
+			receivedMessages.removeAll(messagesToBeRemoved);
 		}
 	}
 	
