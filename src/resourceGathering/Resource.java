@@ -33,6 +33,22 @@ public class Resource {
 		return this.value;
 	}
 	
+	public int getSize() {
+		return this.size;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public ArrayList<Robot> getHandlers() {
+		return this.handlers;
+	}
+	
+	public boolean getIsBeingCarried() {
+		return this.isBeingCarried;
+	}
+	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void updateState() {
 		if (handlers.size() >= size) {

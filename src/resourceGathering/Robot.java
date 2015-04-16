@@ -344,7 +344,8 @@ public class Robot {
 
 		debugger.log("Wait");
 		
-		if(payload != null) {
+		if((payload != null) &&(grid.getLocation(payload) != null)) {
+			
 			this.communicator.emit(grid.getLocation(this),grid.getLocation(payload), grid, payload.value, payload.size, payload.size - payload.handlers.size());
 		} else {
 			random();
@@ -413,6 +414,10 @@ public class Robot {
 	public int getTicksInCurrentState(){
 		return this.ticksInCurrentState;
 	}
+
+	public int getID(){
+		return id;
+	}
 	
 	public int getMaxFuelLevel(){
 		return maxFuelLevel;
@@ -426,6 +431,57 @@ public class Robot {
 		return fuelLevel;
 	}
 	
+	public boolean isAdequateFuel() {
+		return adequateFuel;
+	}
+
+	public boolean isSensesFuel() {
+		return sensesFuel;
+	}
+
+	public boolean isReceivingBroadcast() {
+		return receivingBroadcast;
+	}
+
+	public boolean isCanCarry() {
+		return canCarry;
+	}
+
+	public boolean isAdjacentToSensorTarget() {
+		return isAdjacentToSensorTarget;
+	}
+
+	public boolean isAdjacentToMessageTarget() {
+		return isAdjacentToMessageTarget;
+	}
+
+	public boolean isOutOfFuel() {
+		return outOfFuel;
+	}
+
+	public ResourceSensor getSensor() {
+		return sensor;
+	}
+
+	public Communicator getCommunicator() {
+		return communicator;
+	}
+
+	public Resource getPayload() {
+		return payload;
+	}
+
+	public State getCurrentState() {
+		return currentState;
+	}
+
+	public Utility getUtility() {
+		return utility;
+	}
+	
+	
+	
+	
 	public void setPayload(Resource resource) {
 		this.payload = resource;
 	}
@@ -434,6 +490,8 @@ public class Robot {
 		fuelLevel = fl;
 		return;
 	}
+	
+	
 	
 	public enum State {
 		RANDOM, PURSUIT, ASSIST, CARRY, WAIT, REFUEL, OUT_OF_FUEL
@@ -449,6 +507,10 @@ public class Robot {
 	
 	public int IsAssist() {
 		return this.currentState == State.ASSIST ? 1 : 0;
+	}
+	
+	public int IsDead() {
+		return this.currentState == State.OUT_OF_FUEL ? 1 : 0;
 	}
 	
 	public int IsCarry() {
