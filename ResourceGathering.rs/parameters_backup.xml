@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
+<<<<<<< HEAD
 					<parameter name="fuelRate" displayName="Fuel Depletion Rate" type="int" 
 						defaultValue="1" 
 						isReadOnly="false" 
@@ -13,6 +14,7 @@
 									
 		/>
 				<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
+
 						defaultValue="__NULL__"
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
@@ -24,8 +26,9 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="full_tank_utility" displayName="Full Tank Utility" type="int" 
-						defaultValue="100" 
+
+				<parameter name="robot_count" displayName="Robots" type="int" 
+						defaultValue="10" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -36,13 +39,13 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="robot_count" displayName="Robots" type="int" 
-						defaultValue="10" 
+				<parameter name="resource_proximity_bonus" displayName="Resource Proximity Bonus" type="int" 
+						defaultValue="100" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="resource_proximity_bonus" displayName="Resource Proximity Bonus" type="int" 
+				<parameter name="full_tank_utility" displayName="Full Tank Utility" type="int" 
 						defaultValue="100" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
@@ -54,14 +57,20 @@
 						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
 									
 		/>
-				<parameter name="max_fuel_capacity" displayName="Robot Fuel Cap." type="int" 
-						defaultValue="100" 
+				<parameter name="max_communication_range" displayName="Communication Range" type="int" 
+						defaultValue="10" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="max_communication_range" displayName="Communication Range" type="int" 
+				<parameter name="resource_count" displayName="Resources" type="int" 
 						defaultValue="10" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="max_fuel_capacity" displayName="Robot Fuel Cap." type="int" 
+						defaultValue="100" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
