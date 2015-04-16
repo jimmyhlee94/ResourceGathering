@@ -24,6 +24,14 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
+
+				<parameter name="field_size" displayName="Field Size" type="int" 
+						defaultValue="25" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+
 				<parameter name="resource_proximity_bonus" displayName="Resource Proximity Bonus" type="int" 
 						defaultValue="100" 
 						isReadOnly="false" 

@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Total Fuel Collected</name>
+  <name>Task Allocation</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,25 +11,61 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>406361997</hashCode>
+    <hashCode>-528324716</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>stored</string>
+      <string>Assist</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>stored</id>
-        <className>resourceGathering.Headquarters</className>
-        <methodName>getFuelStore</methodName>
+        <id>Assist</id>
+        <className>resourceGathering.Robot</className>
+        <methodName>IsAssist</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>remaining</string>
+      <string>Carry</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>remaining</id>
-        <className>resourceGathering.Resource</className>
-        <methodName>getValue</methodName>
+        <id>Carry</id>
+        <className>resourceGathering.Robot</className>
+        <methodName>IsCarry</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Pursuit</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Pursuit</id>
+        <className>resourceGathering.Robot</className>
+        <methodName>IsPursuit</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Random</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Random</id>
+        <className>resourceGathering.Robot</className>
+        <methodName>IsRandom</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Refuel</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Refuel</id>
+        <className>resourceGathering.Robot</className>
+        <methodName>IsRefuel</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Wait</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Wait</id>
+        <className>resourceGathering.Robot</className>
+        <methodName>IsWait</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
