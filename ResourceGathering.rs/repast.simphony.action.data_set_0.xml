@@ -33,6 +33,15 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>consumed</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>consumed</id>
+        <className>resourceGathering.Robot</className>
+        <methodName>getFuelConsumed</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

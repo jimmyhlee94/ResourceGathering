@@ -69,6 +69,15 @@
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Dead</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Dead</id>
+        <className>resourceGathering.Robot</className>
+        <methodName>IsDead</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

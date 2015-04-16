@@ -2,3 +2,4 @@
 *.class
 Repast.settings
 bin/*
+*.class
