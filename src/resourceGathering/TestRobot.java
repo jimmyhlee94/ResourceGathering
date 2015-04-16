@@ -11,6 +11,8 @@ import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.ContextUtils;
 import resourceGathering.Robot.State;
 
+//This class tests out potential states
+
 public class TestRobot {
 
 	private Robot sourceRobot;
@@ -67,6 +69,7 @@ public class TestRobot {
 		
 	}
 	
+	//simulates stripped down versions of the actions that prevent the robot from learning new information.
 	public void testState() {
 		
 		if(testState == State.CARRY) {
@@ -170,6 +173,7 @@ public class TestRobot {
 	            Math.pow(grid.getLocation(a).getY() - grid.getLocation(b).getY(), 2) );
 	}
 	
+	//calculate the utility of the ending state, which will be accessed by the source robot.
 	public float getUtility() {
 		float utility = 0;
 		if(sensor.distance > 0) {

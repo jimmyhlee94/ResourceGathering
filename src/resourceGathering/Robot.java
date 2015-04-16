@@ -144,6 +144,7 @@ public class Robot {
 			payloadLocation = grid.getLocation(payload);
 		}
 		
+		//get messages from robots in range
 		communicator.receive(grid.getLocation(this),payloadLocation, grid);
 		
 		//calculate if more fuel is needed
@@ -167,6 +168,7 @@ public class Robot {
 		
 		
 		if(payload != null) {
+			//the following parameters are automatically true if a robot is next to a resource
 			debugger.log("-Has payload");
 			sensesFuel = true;
 			sensor.location = grid.getLocation(payload);
@@ -195,6 +197,7 @@ public class Robot {
 			}
 			
 			if(!resourceExists) {
+				//to account for the random execution order of the schedule, which may give false info to robots
 				return State.RANDOM;
 			}
 			
@@ -282,7 +285,9 @@ public class Robot {
 		float highestUtility = -1;
 		State bestState = State.RANDOM;
 		
+		//test all possible states.
 		for(State state : possibleStates) {
+			//send out test robots to test possible states
 			TestRobot tRobot = new TestRobot(this, state, utility);
 			tRobot.testState();
 			float utility = tRobot.getUtility();
@@ -297,7 +302,6 @@ public class Robot {
 	}
 	
 	public void outOfFuel() {
-		//do nothing for now
 		releasePayload();
 	}
 	

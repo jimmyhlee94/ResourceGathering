@@ -85,13 +85,15 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		}
 				
 		for (int j = 0; j < resourceCount; j++) {
-			//Resource with random value between 10-1000, inclusive and size of 1.
+			
+			//skew resources sizes so that they tend to require less robots to carry.
 			RandomHelper.createNormal(robotCount/4, robotCount/8);
 			cern.jet.random.Normal normal = RandomHelper.getNormal();
 			int resourceSize = normal.nextInt(); //RandomHelper.nextIntFromTo(1, 5);
 			if(resourceSize <=1 ) {
 				resourceSize = 1;
 			}
+			//Resource with random value between 10-1000, inclusive and size drawn from a normal distribution
 			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(10,1000), resourceSize, j));
 		}
 
