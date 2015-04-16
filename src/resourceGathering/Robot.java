@@ -441,6 +441,10 @@ public class Robot {
 		return this.currentState == State.ASSIST ? 1 : 0;
 	}
 	
+	public int IsDead() {
+		return this.currentState == State.OUT_OF_FUEL ? 1 : 0;
+	}
+	
 	public int IsCarry() {
 		return this.currentState == State.CARRY ? 1 : 0;
 	}

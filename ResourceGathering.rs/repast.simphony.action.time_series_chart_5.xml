@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>Task Allocation</name>
-  <dataSet>Task Allocation</dataSet>
+  <name>Time Series Chart</name>
+  <dataSet>Total Fuel Collected</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
-  <yAxisLabel>Robots Allocated</yAxisLabel>
-  <chartTitle>Task Allocation</chartTitle>
+  <yAxisLabel>Fuel level</yAxisLabel>
+  <chartTitle>Fuel Levels</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>192</red>
@@ -21,33 +21,9 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Random</string>
+      <string>remaining</string>
       <SeriesData>
-        <label>Random</label>
-        <color>
-          <red>255</red>
-          <green>0</green>
-          <blue>255</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>Refuel</string>
-      <SeriesData>
-        <label>Refuel</label>
-        <color>
-          <red>255</red>
-          <green>200</green>
-          <blue>0</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>Carry</string>
-      <SeriesData>
-        <label>Carry</label>
+        <label>remaining</label>
         <color>
           <red>255</red>
           <green>0</green>
@@ -57,33 +33,9 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Wait</string>
+      <string>stored</string>
       <SeriesData>
-        <label>Wait</label>
-        <color>
-          <red>0</red>
-          <green>255</green>
-          <blue>255</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>Pursuit</string>
-      <SeriesData>
-        <label>Pursuit</label>
-        <color>
-          <red>0</red>
-          <green>255</green>
-          <blue>0</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>Assist</string>
-      <SeriesData>
-        <label>Assist</label>
+        <label>stored</label>
         <color>
           <red>0</red>
           <green>0</green>
