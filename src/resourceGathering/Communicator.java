@@ -71,7 +71,7 @@ public class Communicator {
 	}
 	
 	public GridPoint findBestLocation(Grid<Object> grid, GridPoint currentLocation, Utility utility) {
-		GridPoint bestLocation = grid.getLocation(this);
+		GridPoint bestLocation = currentLocation;
 		float highestUtility = -1;
 		
 		for(Message m : receivedMessages) {
