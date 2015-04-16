@@ -5,7 +5,6 @@ import java.util.Random;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
-import repast.simphony.context.space.graph.NetworkBuilder;
 import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
@@ -15,7 +14,6 @@ import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.continuous.RandomCartesianAdder;
-import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
@@ -82,7 +80,12 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 				
 		for (int j = 0; j < resourceCount; j++) {
 			//Resource with random value between 10-1000, inclusive and size of 1.
-			int resourceSize = RandomHelper.nextIntFromTo(1, 5);
+			RandomHelper.createNormal(robotCount/4, robotCount/8);
+			cern.jet.random.Normal normal = RandomHelper.getNormal();
+			int resourceSize = normal.nextInt(); //RandomHelper.nextIntFromTo(1, 5);
+			if(resourceSize <=1 ) {
+				resourceSize = 1;
+			}
 			context.add(new Resource(space, grid, RandomHelper.nextIntFromTo(10,1000), resourceSize, j));
 		}
 
