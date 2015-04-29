@@ -80,7 +80,7 @@ public class Robot {
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
-		debugger.log("ID: " + id);
+		//debugger.log("ID: " + id);
 		State prevState = currentState;
 		currentState = determineState();
 		if(currentState == prevState){
@@ -112,7 +112,7 @@ public class Robot {
 			outOfFuel();
 			break;
 		}
-		debugger.log("");
+		//debugger.log("");
 	}
 	
 	public State determineState() {				
@@ -169,7 +169,7 @@ public class Robot {
 		
 		if(payload != null) {
 			//the following parameters are automatically true if a robot is next to a resource
-			debugger.log("-Has payload");
+			//debugger.log("-Has payload");
 			sensesFuel = true;
 			sensor.location = grid.getLocation(payload);
 			isAdjacentToSensorTarget = true;
@@ -226,7 +226,7 @@ public class Robot {
 			}
 		}
 		if((sensor.isAdjacent) && (payload == null)){
-			debugger.log("-Next to sensor target.");
+			//debugger.log("-Next to sensor target.");
 			this.isAdjacentToSensorTarget = true;
 
 			//attach to adjacent object
@@ -322,9 +322,9 @@ public class Robot {
 	//TODO pursuit
 	public void pursue() {
 		if(!adequateFuel) {
-			debugger.isDebugging = true;
+			//debugger.isDebugging = true;
 		}
-		debugger.log("Pursuing Location: " + sensor.location.getX() + " , " + sensor.location.getY());
+		//debugger.log("Pursuing Location: " + sensor.location.getX() + " , " + sensor.location.getY());
 		moveTowards(sensor.location);
 	}
 	
@@ -332,7 +332,7 @@ public class Robot {
 	public void assist() {
 
 		releasePayload();
-		debugger.log("Assist");
+		//debugger.log("Assist");
 		//some logic for determining which robot to assist.
 		//use the utility function to determine the best message.
 		GridPoint bestLocation = grid.getLocation(this);
@@ -382,7 +382,7 @@ public class Robot {
 	public void refuel() {
 
 		releasePayload();
-		debugger.log("Refuel");
+		//debugger.log("Refuel");
 		moveTowards(grid.getLocation(HQ));
 	}
 	

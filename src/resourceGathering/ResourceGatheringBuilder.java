@@ -28,7 +28,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		
 		context.setId("ResourceGathering");
 		
-
+		RunEnvironment.getInstance().endAt(500);
 		
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		int robotCount = (Integer)params.getValue("robot_count");

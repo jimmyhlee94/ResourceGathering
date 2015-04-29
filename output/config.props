@@ -1,0 +1,9 @@
+model.archive = D:/ResourceGathering/output/complete_model.jar
+batch.params.file = scenario.rs/batch_params.xml
+ssh.key_dir = C:/Users/Brad/.ssh
+poll.frequency = 60.0
+model.output = D:/ResourceGathering/output
+
+vm.arguments = -Xmx512M
+local.0.instances = 2
+local.0.working_directory = C:/Users/Brad/AppData/Local/Temp/
