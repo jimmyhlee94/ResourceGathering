@@ -40,7 +40,6 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		int resourceCount = (Integer)params.getValue("resource_count");
 		
 		//utility params
-		float resourceWeight = (Float)params.getValue("resource_weight");
 		int resourceProximityBonus = (Integer)params.getValue("resource_proximity_bonus");
 
 		int hqProximityBonus = (Integer)params.getValue("hq_proximity_bonus");

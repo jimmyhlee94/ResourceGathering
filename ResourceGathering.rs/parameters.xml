@@ -7,7 +7,7 @@
 									
 		/>
 				<parameter name="max_sensor_range" displayName="2R: Sensor Range" type="int" 
-						defaultValue="5" 
+						defaultValue="15" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -25,7 +25,7 @@
 									
 		/>
 				<parameter name="u_carry_bias" displayName="4U: Carry Bias" type="int" 
-						defaultValue="0" 
+						defaultValue="250" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -37,13 +37,13 @@
 									
 		/>
 				<parameter name="resource_count" displayName="1G: Resources" type="int" 
-						defaultValue="10" 
+						defaultValue="75" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
 				<parameter name="penalty_for_waiting" displayName="3P: Penalty For Waiting" type="int" 
-						defaultValue="5" 
+						defaultValue="100" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -55,7 +55,7 @@
 									
 		/>
 				<parameter name="field_size" displayName="1G: Field Size" type="int" 
-						defaultValue="25" 
+						defaultValue="50" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -73,7 +73,7 @@
 									
 		/>
 				<parameter name="resource_proximity_bonus" displayName="3P: Resource Proximity Bonus" type="int" 
-						defaultValue="100" 
+						defaultValue="0" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -84,14 +84,8 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="resource_weight" displayName="1G: Resource Weight" type="float" 
-						defaultValue="1.0" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-									
-		/>
 				<parameter name="max_communication_range" displayName="2R: Communication Range" type="int" 
-						defaultValue="10" 
+						defaultValue="25" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
