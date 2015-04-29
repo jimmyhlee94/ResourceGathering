@@ -84,12 +84,6 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="resource_weight" displayName="1G: Resource Weight" type="float" 
-						defaultValue="1.0" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
-									
-		/>
 				<parameter name="max_communication_range" displayName="2R: Communication Range" type="int" 
 						defaultValue="25" 
 						isReadOnly="false" 
