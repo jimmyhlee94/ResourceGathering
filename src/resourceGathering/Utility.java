@@ -77,7 +77,7 @@ public class Utility {
 	}
 	
 	public float UtilityOfProximityToOthers(int value, int size, int handlersNeeded, float distance, int mapSize) {
-		float utility = (value/size) * (1-(handlersNeeded/numTotalRobots)) * (1-(distance/mapSize));
+		float utility = value * (1-(handlersNeeded/numTotalRobots)) * (1-(distance/mapSize));
 		return utility;
 		
 	}
