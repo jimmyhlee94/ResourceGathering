@@ -40,6 +40,7 @@ public class Headquarters {
 		this.location = grid.getLocation(this);
 	}
 	
+	//take fuel from robots that bring it next to HQ.
 	@ScheduledMethod(start = 1, interval = 1)
 	public void takeFuel() {
 		
@@ -69,6 +70,7 @@ public class Headquarters {
 			}
 		}
 		
+		//destroy resource from grid.
 		for(Resource resource : resourcesToBeRemoved) {
 			Context<Object> context = ContextUtils.getContext(resource);
 			context.remove(resource);

@@ -33,7 +33,7 @@ public class Communicator {
 		return this.isReceiving;
 	}
 	
-	
+	//broadcast information about the resource and where it is
 	public void emit(GridPoint currentLocation, GridPoint resourceLocation, Grid<Object> grid, int resourceValue, int resourceSize, int handlersNeeded) {
 		isEmitting = true;
 		broadcastingMessage = new Message(resourceLocation, resourceValue, resourceSize, handlersNeeded);
@@ -44,7 +44,7 @@ public class Communicator {
 		this.broadcastingMessage = null;
 	}
 	
-	
+	//check for emitting robots within range.
 	public void receive(GridPoint currentLocation, GridPoint currentResourceLocation ,Grid<Object> grid) {
 		
 		this.isReceiving = false;
@@ -69,6 +69,7 @@ public class Communicator {
 			}
 		}
 		
+		//remove messages that are being sent from robots that are waiting from the same resource that the current robot is waiting on
 		if(currentResourceLocation != null) {
 			ArrayList<Message> messagesToBeRemoved = new ArrayList<Message>();
 			for(Message m : receivedMessages) {
@@ -80,6 +81,7 @@ public class Communicator {
 		}
 	}
 	
+	//Using the utility function, figure out which robot should be assisted.
 	public GridPoint findBestLocation(Grid<Object> grid, GridPoint currentLocation, Utility utility) {
 		GridPoint bestLocation = currentLocation;
 		float highestUtility = -1;

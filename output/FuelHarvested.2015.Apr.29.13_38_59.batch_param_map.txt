@@ -1,0 +1,5 @@
+"run","robot_count","hq_proximity_bonus","field_size","u_wait_bias","resource_weight","randomSeed","u_assist_bias","u_pursue_bias","penalty_for_waiting","max_sensor_range","u_carry_bias","resource_proximity_bonus","full_tank_utility","Fuel Depletion Rate","max_communication_range","resource_count","max_fuel_capacity"
+1,10,100,50,0,1.0,108597882,0,0,100,0,250,0,100,0.1,25,75,100
+3,10,100,50,0,1.0,108605771,0,0,100,20,250,0,100,0.1,25,75,100
+2,10,100,50,0,1.0,108598379,0,0,100,10,250,0,100,0.1,25,75,100
+4,10,100,50,0,1.0,108607598,0,0,100,30,250,0,100,0.1,25,75,100

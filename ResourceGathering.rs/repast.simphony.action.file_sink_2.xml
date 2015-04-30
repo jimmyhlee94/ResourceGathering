@@ -1,0 +1,13 @@
+<repast.simphony.data2.engine.FileSinkDescriptor>
+  <name>Stored Fuel</name>
+  <dataSet>Total Fuel Collected</dataSet>
+  <delimiter>,</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>stored</string>
+    <string>consumed</string>
+    <string>remaining</string>
+  </sourceIds>
+  <fileName>FuelHarvested.txt</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>
