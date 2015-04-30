@@ -21,6 +21,18 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
+      <string>remaining</string>
+      <SeriesData>
+        <label>remaining</label>
+        <color>
+          <red>255</red>
+          <green>0</green>
+          <blue>0</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
       <string>consumed</string>
       <SeriesData>
         <label>consumed</label>
@@ -40,18 +52,6 @@
           <red>0</red>
           <green>0</green>
           <blue>255</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>remaining</string>
-      <SeriesData>
-        <label>remaining</label>
-        <color>
-          <red>255</red>
-          <green>0</green>
-          <blue>0</blue>
           <alpha>255</alpha>
         </color>
       </SeriesData>

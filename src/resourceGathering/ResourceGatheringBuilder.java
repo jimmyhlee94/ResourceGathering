@@ -105,5 +105,21 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		
 		return context;
 	}
+	
+	public int getCarryBias(){
+		return (Integer)RunEnvironment.getInstance().getParameters().getValue("u_carry_bias");
+	};
+	
+	public int getPursueBias(){
+		return (Integer)RunEnvironment.getInstance().getParameters().getValue("u_pursue_bias");
+	};
+	
+	public int getAssistBias(){
+		return (Integer)RunEnvironment.getInstance().getParameters().getValue("u_assist_bias");
+	};
+	
+	public int getWaitBias(){
+		return (Integer)RunEnvironment.getInstance().getParameters().getValue("u_wait_bias");
+	};
 
 }

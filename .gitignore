@@ -4,3 +4,4 @@ Repast.settings
 bin/*
 *.class
 output/*
+*.txt

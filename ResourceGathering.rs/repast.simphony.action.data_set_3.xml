@@ -1,6 +1,7 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Total Fuel Collected</name>
-  <type>AGGREGATE</type>
+  <name>Bias Parameters</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>resourceGathering.ResourceGatheringBuilder</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -11,35 +12,40 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>406361997</hashCode>
+    <hashCode>495253669</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>stored</string>
+      <string>AssistBias</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>stored</id>
-        <className>resourceGathering.Headquarters</className>
-        <methodName>getFuelStore</methodName>
-        <aggType>SUM</aggType>
+        <id>AssistBias</id>
+        <className>resourceGathering.ResourceGatheringBuilder</className>
+        <methodName>getAssistBias</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>remaining</string>
+      <string>CarryBias</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>remaining</id>
-        <className>resourceGathering.Resource</className>
-        <methodName>getValue</methodName>
-        <aggType>SUM</aggType>
+        <id>CarryBias</id>
+        <className>resourceGathering.ResourceGatheringBuilder</className>
+        <methodName>getCarryBias</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>consumed</string>
+      <string>PursueBias</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>consumed</id>
-        <className>resourceGathering.Robot</className>
-        <methodName>getFuelConsumed</methodName>
-        <aggType>SUM</aggType>
+        <id>PursueBias</id>
+        <className>resourceGathering.ResourceGatheringBuilder</className>
+        <methodName>getPursueBias</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>WaitBias</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>WaitBias</id>
+        <className>resourceGathering.ResourceGatheringBuilder</className>
+        <methodName>getWaitBias</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>
