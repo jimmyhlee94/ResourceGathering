@@ -78,6 +78,12 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
+				<parameter name="resource_weight" displayName="3P: Possession Utility Multiplier" type="float" 
+						defaultValue="1.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+									
+		/>
 				<parameter name="max_fuel_capacity" displayName="2R: Robot Fuel Cap." type="int" 
 						defaultValue="100" 
 						isReadOnly="false" 

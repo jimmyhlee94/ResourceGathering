@@ -12,6 +12,12 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
+				<parameter name="resource_size_exponent" displayName="3P: Resource Size Exponent" type="float" 
+						defaultValue="1.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$FloatConverter"
+									
+		/>
 				<parameter name="u_assist_bias" displayName="4U: Assist Bias" type="int" 
 						defaultValue="0" 
 						isReadOnly="false" 
