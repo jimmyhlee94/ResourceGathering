@@ -48,6 +48,12 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
+				<parameter name="mean_resource_size" displayName="1G: Mean Resource Size" type="int" 
+						defaultValue="4" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
 				<parameter name="penalty_for_waiting" displayName="3P: Penalty For Waiting" type="int" 
 						defaultValue="100" 
 						isReadOnly="false" 

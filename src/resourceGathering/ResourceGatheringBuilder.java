@@ -38,6 +38,7 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 		int maxCommunicationRange = (Integer)params.getValue("max_communication_range");
 		
 		int resourceCount = (Integer)params.getValue("resource_count");
+		int meanResourceSize = (Integer)params.getValue("mean_resource_size");
 		
 		//utility params
 		int resourceProximityBonus = (Integer)params.getValue("resource_proximity_bonus");
@@ -85,8 +86,8 @@ public class ResourceGatheringBuilder implements ContextBuilder<Object> {
 				
 		for (int j = 0; j < resourceCount; j++) {
 			
-			//skew resources sizes so that they tend to require less robots to carry.
-			RandomHelper.createNormal(robotCount/4, robotCount/8);
+
+			RandomHelper.createNormal(meanResourceSize, robotCount/8);
 			cern.jet.random.Normal normal = RandomHelper.getNormal();
 			int resourceSize = normal.nextInt(); //RandomHelper.nextIntFromTo(1, 5);
 			if(resourceSize <=1 ) {
