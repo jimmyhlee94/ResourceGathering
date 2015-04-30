@@ -21,6 +21,8 @@ public class Utility {
 	//Utility lost for waiting consecutive ticks
 	public float penaltyForWaiting;
 	
+	//Exponent applied on size of resource
+	public float resourceSizeExponent;
 	
 	public int pursueBias;
 	public int carryBias;
@@ -40,6 +42,8 @@ public class Utility {
 		hqProximityBonus = (Integer)params.getValue("hq_proximity_bonus");
 		fullTankUtility = (Integer)params.getValue("full_tank_utility");
 		penaltyForWaiting = (Integer)params.getValue("penalty_for_waiting");
+		resourceSizeExponent = (Float)params.getValue("resource_size_exponent");
+		
 		
 		pursueBias = (Integer)params.getValue("u_pursue_bias");
 		carryBias = (Integer)params.getValue("u_carry_bias");
@@ -81,7 +85,7 @@ public class Utility {
 	
 	//utility of moving closer to robots in need of help
 	public float UtilityOfProximityToOthers(int value, int size, int handlersNeeded, float distance, int mapSize) {
-		float utility = value * (1-(handlersNeeded/numTotalRobots)) * (1-(distance/mapSize));
+		float utility = (float) (value * Math.pow(size, resourceSizeExponent) * (1-(handlersNeeded/numTotalRobots)) * (1-(distance/mapSize)));
 		return utility;
 		
 	}
